@@ -78,6 +78,21 @@ local cmp_mappings = lsp.defaults.cmp_mappings({
 -- })
 lsp.nvim_workspace()
 
+lsp.configure("intelephense", {
+    settings = {
+        intelephense = {
+            environment = {
+                includePaths = {
+                    ".",
+                    "/usr/share/pear",
+                    "/usr/share/php",
+                    "/home/fpiraz/source/candango",
+                },
+            }
+        }
+    }
+})
+
 -- From https://stackoverflow.com/a/68998531/2887989
 -- vim.api.nvim_set_current_dir(vim.fn.getcwd())
 -- local project_dir = Dev.get_path(vim.fn.expand("%:p"))
