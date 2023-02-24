@@ -1,9 +1,9 @@
 local lsp = require("lsp-zero")
 local neodev = require("neodev")
 -- local lspconfig = require("lspconfig")
--- local lspconfig_util = lspconfig.util
--- local Dev = require("piraz.dev")
--- local log = Dev.log
+local lspconfig_util = require("lspconfig.util")
+local Dev = require("piraz.dev")
+local log = Dev.log
 
 -- See: https://github.com/folke/neodev.nvim
 -- Als: https://github.com/rcarriga/nvim-dap-ui
@@ -102,13 +102,15 @@ lsp.configure("intelephense", {
 --     root_dir = lspconfig_util.root_pattern(".git")
 -- }
 
--- lsp.configure("ruff_lsp",{
---     -- see :h lspconfig-root-detection
---     settings = {
---         single_file_support = false,
---         root_dir = lspconfig_util.find_git_ancestor,
---     }
--- })
+-- log.debug(lspconfig_util.root_pattern("setup.py")() or vim.cmd("pwd"))
+
+-- see :h lspconfig-root-detection
+lsp.configure("ruff_lsp",{
+    settings = {
+    },
+    root_dir = lspconfig_util.root_pattern("setup.py"),
+})
+
 lsp.set_preferences({
     sign_icons = {}
 })
