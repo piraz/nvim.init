@@ -59,7 +59,9 @@ return require("packer").startup(function(use)
 
     use("mbbill/undotree")
     use("tpope/vim-fugitive")
-    use("airblade/vim-gitgutter")
+    -- use("airblade/vim-gitgutter")
+    -- From: https://youtu.be/yMs97o_TdBU?t=218
+    use("lewis6991/gitsigns.nvim")
 
     -- FROM: https://youtu.be/lpQMeFph1RE?t=161
     --[[ use {
