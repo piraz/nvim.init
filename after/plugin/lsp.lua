@@ -2,8 +2,8 @@ local lsp = require("lsp-zero")
 local neodev = require("neodev")
 -- local lspconfig = require("lspconfig")
 local lspconfig_util = require("lspconfig.util")
-local Dev = require("piraz.dev")
-local log = Dev.log
+-- local dev = require("piraz.dev")
+-- local log = dev.log
 
 -- See: https://github.com/folke/neodev.nvim
 -- Als: https://github.com/rcarriga/nvim-dap-ui

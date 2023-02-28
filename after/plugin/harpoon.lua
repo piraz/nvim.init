@@ -1,4 +1,12 @@
-local mark = require("harpoon.mark")
+local dev = require("piraz.dev")
+local log = dev.log
+
+local loaded, mark = pcall(require, "harpoon.mark")
+if not loaded then
+    log.debug("harpoon not found")
+    return
+end
+
 local ui = require("harpoon.ui")
 
 vim.keymap.set("n", "<leader>a", mark.add_file)

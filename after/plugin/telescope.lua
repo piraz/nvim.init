@@ -1,4 +1,11 @@
-local builtin = require('telescope.builtin')
+local dev = require("piraz.dev")
+local log = dev.log
+
+local loaded, builtin = pcall(require, "telescope.builtin")
+if not loaded then
+    log.debug("telescope not found")
+    return
+end
 
 vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
 vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})

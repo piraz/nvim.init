@@ -1,15 +1,16 @@
-local Dev = require("piraz.dev")
-local log = Dev.log
+local dev = require("piraz.dev")
+local log = dev.log
 
 local loaded, lualine = pcall(require, "lualine")
-
-if loaded then
-    local theme = require("lualine.themes.onedark")
-    lualine.setup {
-        options = {
-            theme = theme,
-        },
-    }
-else
+if not loaded then
     log.debug("lualine not found")
+    return
 end
+
+local theme = require("lualine.themes.onedark")
+
+lualine.setup {
+    options = {
+        theme = theme,
+    },
+}

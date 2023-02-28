@@ -1,4 +1,13 @@
-require'nvim-treesitter.configs'.setup {
+local dev = require("piraz.dev")
+local log = dev.log
+
+local loaded, treesitter_configs = pcall(require, "nvim-treesitter.configs")
+if not loaded then
+    log.debug("treesitter not found")
+    return
+end
+
+treesitter_configs.setup {
   -- A list of parser names, or "all" (the four listed parsers should always be
   -- installed)
   ensure_installed = {

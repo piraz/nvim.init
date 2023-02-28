@@ -1,4 +1,11 @@
-local trouble = require("trouble")
+local dev = require("piraz.dev")
+local log = dev.log
+
+local loaded, trouble = pcall(require, "trouble")
+if not loaded then
+    log.debug("trouble not found")
+    return
+end
 
 trouble.setup {
     -- your configuration comes here
