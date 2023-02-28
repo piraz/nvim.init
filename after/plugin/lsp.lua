@@ -28,6 +28,7 @@ lsp.ensure_installed({
     "prosemd_lsp", -- proselint should be installed manually 
     "pylsp",
     "lua_ls",
+    "ruff_lsp",
     "tsserver",
 })
 
@@ -108,7 +109,13 @@ lsp.configure("intelephense", {
 lsp.configure("ruff_lsp",{
     settings = {
     },
-    root_dir = lspconfig_util.root_pattern("setup.py"),
+    root_dir = function() return vim.fn.getcwd() end,
+})
+
+lsp.configure("pylsp",{
+    settings = {
+    },
+    root_dir = function() return vim.fn.getcwd() end,
 })
 
 lsp.set_preferences({
