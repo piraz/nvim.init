@@ -1,4 +1,14 @@
 -- for more color schemes, see: https://vimcolorschemes.com/
+-- See:
+-- :help hi
+-- :so $VIMRUNTIME/syntax/hitest.vim
+-- DiffAdd           DiffAdd TelescopeResultsDiffAdd diffAdded GitSignsAddLn
+--     GitSignsUntrackedLn GitSignsAddPreview
+-- DiffChange        DiffChange TelescopeResultsDiffChange diffChanged
+--     netrwLib netrwMakefile GitSignsChangeLn GitSignsChangedeleteLn
+-- DiffDelete        DiffDelete TelescopeResultsDiffDelete diffRemoved
+--     GitSignsDeletePreview GitSignsDeleteVirtLn
+-- DiffText          DiffText
 
 function ColorMyPencils(color)
     -- color = color or "rose-pine"
