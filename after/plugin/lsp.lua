@@ -8,7 +8,7 @@ local lspconfig_util = require("lspconfig.util")
 -- See: https://github.com/folke/neodev.nvim
 -- Als: https://github.com/rcarriga/nvim-dap-ui
 neodev.setup({
-    library = { plugins = {"nvim-dap-ui", types = true}}
+    library = { plugins = { "nvim-dap-ui", types = true } }
 })
 
 lsp.preset("recommended")
@@ -25,7 +25,7 @@ lsp.ensure_installed({
     "intelephense",
     "jsonls",
     "lemminx",
-    "prosemd_lsp", -- proselint should be installed manually 
+    "prosemd_lsp", -- proselint should be installed manually
     "pylsp",
     "lua_ls",
     "ruff_lsp",
@@ -33,7 +33,7 @@ lsp.ensure_installed({
 })
 
 local cmp = require("cmp")
-local cmp_select = {behavior = cmp.SelectBehavior.Select}
+local cmp_select = { behavior = cmp.SelectBehavior.Select }
 local cmp_mappings = lsp.defaults.cmp_mappings({
     ["<C-p>"] = cmp.mapping.select_prev_item(cmp_select),
     ["<C-n>"] = cmp.mapping.select_next_item(cmp_select),
@@ -106,13 +106,13 @@ lsp.configure("intelephense", {
 -- log.debug(lspconfig_util.root_pattern("setup.py")() or vim.cmd("pwd"))
 
 -- see :h lspconfig-root-detection
-lsp.configure("ruff_lsp",{
+lsp.configure("ruff_lsp", {
     settings = {
     },
     root_dir = function() return vim.fn.getcwd() end,
 })
 
-lsp.configure("pylsp",{
+lsp.configure("pylsp", {
     settings = {
     },
     root_dir = function() return vim.fn.getcwd() end,
@@ -123,7 +123,7 @@ lsp.set_preferences({
 })
 
 lsp.setup_nvim_cmp({
-   mapping = cmp_mappings
+    mapping = cmp_mappings
 })
 
 -- lsp.on_lsp_ready(function(client, bufnr)
@@ -131,27 +131,37 @@ lsp.setup_nvim_cmp({
 
 
 lsp.on_attach(function(client, bufnr)
-    local opts = {buffer = bufnr, remap = false}
+    local opts = { buffer = bufnr, remap = false }
     -- if client.name == "ruff_lsp" then
     --     print(vim.inspect(client))
     -- end
 
-    vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, opts)
-    vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end, opts)
-    vim.keymap.set("n", "<leader>vws",
-    function() vim.lsp.buf.workspace_symbol() end, opts)
-    vim.keymap.set("n", "<leader>vd",
-    function() vim.diagnostic.open_float() end, opts)
-    vim.keymap.set("n", "[d", function() vim.diagnostic.goto_next() end, opts)
-    vim.keymap.set("n", "]d", function() vim.diagnostic.goto_prev() end, opts)
-    vim.keymap.set("n", "<leader>vca",
-    function() vim.lsp.buf.code_action() end, opts)
-    vim.keymap.set("n", "<leader>vrr",
-    function() vim.lsp.buf.references() end, opts)
-    vim.keymap.set("n", "<leader>vrn",
-    function() vim.lsp.buf.rename() end, opts)
-    vim.keymap.set("n", "<C-h>",
-    function() vim.lsp.buf.signature_help() end, opts)
+    -- Buffer actions
+    vim.keymap.set("n", "<C-k>", "<Cmd>lua vim.lsp.buf.signature_help()<CR>",
+        opts)
+    vim.keymap.set("n", "go", "<Cmd>lua vim.lsp.buf.type_definition()<CR>",
+        opts)
+    vim.keymap.set("n", "gi", "<Cmd>lua vim.lsp.buf.implementation()<CR>",
+        opts)
+    -- vim.keymap.set("n", "<F4>", "<Cmd>lua vim.lsp.buf.code_action()<CR>",
+    --    opts)
+    vim.keymap.set("n", "ca", "<Cmd>lua vim.lsp.buf.code_action()<CR>", opts)
+    vim.keymap.set("n", "gdc", "<Cmd>lua vim.lsp.buf.declaration()<CR>", opts)
+    vim.keymap.set("n", "gdf", "<Cmd>lua vim.lsp.buf.definition()<CR>", opts)
+    -- vim.keymap.set("n", "gr", "<Cmd>lua vim.lsp.buf.references()<CR>", opts)
+    vim.keymap.set("n", "grf", "<Cmd>lua vim.lsp.buf.references()<CR>", opts)
+    -- vim.keymap.set("n", "<F2>", "<Cmd>lua vim.lsp.buf.rename()<CR>", opts)
+    vim.keymap.set("n", "grn", "<Cmd>lua vim.lsp.buf.rename()<CR>", opts)
+    vim.keymap.set("n", "K", "<Cmd>lua vim.lsp.buf.hover()<CR>", opts)
+    vim.keymap.set("n", "gw", "<Cmd>lua vim.lsp.buf.workspace_symbol()<CR>",
+        opts)
+
+    vim.keymap.set("n", "<leader>vdd",
+        "<Cmd>lua vim.diagnostic.open_float()<CR>", opts)
+    vim.keymap.set("n", "[d", "<Cmd>lua vim.diagnostic.goto_next()<CR>", opts)
+    vim.keymap.set("n", "]d", "<Cmd>lua vim.diagnostic.goto_prev()<CR>", opts)
+    vim.keymap.set("n", "<leader>vdh", "<Cmd>lua vim.diagnostic.hide()<CR>", opts)
+    vim.keymap.set("n", "<leader>vds", "<Cmd>lua vim.diagnostic.show()<CR>", opts)
 end)
 
 lsp.setup()
@@ -191,4 +201,3 @@ lspconfig.sumneko_lua.setup({
 mason_lspconfig.setup ({
     "ruff", "sumneko_lua"
 }) ]]
-
