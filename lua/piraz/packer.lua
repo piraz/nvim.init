@@ -27,7 +27,9 @@ return require("packer").startup(function(use)
         requires = { {'nvim-lua/plenary.nvim'} }
     }
 
-    -- From https://youtu.be/0moS8UHupGc?t=316
+    use("lukas-reineke/indent-blankline.nvim")
+
+   -- From https://youtu.be/0moS8UHupGc?t=316
     use("mfussenegger/nvim-dap")
     use("rcarriga/nvim-dap-ui")
     use("leoluz/nvim-dap-go")
