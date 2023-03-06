@@ -18,7 +18,7 @@ gitsigns.setup {
     },
     signcolumn = true,  -- Toggle with `:Gitsigns toggle_signs`
     numhl      = true, -- Toggle with `:Gitsigns toggle_numhl`
-    linehl     = true, -- Toggle with `:Gitsigns toggle_linehl`
+    linehl     = false, -- Toggle with `:Gitsigns toggle_linehl`
     word_diff  = false, -- Toggle with `:Gitsigns toggle_word_diff`
     watch_gitdir = {
         interval = 1000,
@@ -54,13 +54,20 @@ gitsigns.setup {
         enable = false
     },
 }
+
 -- vim.keymap.set("n", "<leader>gd", function() vim.cmd("GitGutterDisable") end)
 -- vim.keymap.set("n", "<leader>ge", function() vim.cmd("GitGutterEnable") end)
 -- vim.keymap.set("n", "<leader>gf", "<Plug>(GitGutterFold)")
--- vim.keymap.set("n", "]c", "<Plug>(GitGutterNextHunk)")
--- vim.keymap.set("n", "[c", "<Plug>(GitGutterPrevHunk)")
--- vim.keymap.set("n", "<leader>gp", "<Plug>(GitGutterPreviewHunk)")
--- vim.keymap.set("n", "<leader>gs", "<Plug>(GitGutterStageHunk)")
+vim.keymap.set("n", "]c", "<cmd>Gitsigns next_hunk<CR>")
+vim.keymap.set("n", "[c", "<cmd>Gitsigns prev_hunk<CR>")
+vim.keymap.set("n", "<leader>gp", "<cmd>Gitsigns preview_hunk<CR>")
+vim.keymap.set("n", "<leader>gs", "<cmd>Gitsigns stage_hunk<CR>")
 -- vim.keymap.set("x", "<leader>gs", "<Plug>(GitGutterStageHunk)")
--- vim.keymap.set("n", "<leader>gt", function() vim.cmd("GitGutterToggle") end)
--- vim.keymap.set("n", "<leader>gu", "<Plug>(GitGutterUndoHunk)")
+vim.keymap.set("n", "<leader>gtb",
+    "<cmd>Gitsigns toggle_current_line_blame<CR>")
+vim.keymap.set("n", "<leader>gtd", "<cmd>Gitsigns toggle_deleted<CR>")
+vim.keymap.set("n", "<leader>gtl", "<cmd>Gitsigns toggle_linehl<CR>")
+vim.keymap.set("n", "<leader>gtn", "<cmd>Gitsigns toggle_numhl<CR>")
+vim.keymap.set("n", "<leader>gts", "<cmd>Gitsigns toggle_signs<CR>")
+vim.keymap.set("n", "<leader>gtw", "<cmd>Gitsigns toggle_word_diff<CR>")
+vim.keymap.set("n", "<leader>gu", "<cmd>Gitsigns undo_stage_hunk<CR>")
