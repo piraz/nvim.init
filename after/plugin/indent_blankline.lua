@@ -13,4 +13,6 @@ indent_blankline.setup {
     show_current_context_start = false,
 }
 
+vim.cmd("IndentBlanklineDisable")
+
 vim.keymap.set("n", "<leader>ii", "<cmd>IndentBlanklineToggle<CR>")
