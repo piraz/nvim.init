@@ -31,13 +31,14 @@ M.buf_open = function(buf_number, buf_name, buf_type)
     -- :help bufwinnr
     buf_number = buf_number or "-1"
     buf_name = buf_name or "MONSTER_OF_THE_LAKE"
-    buf_number = buf_number or "txt"
+    buf_type = buf_type or "txt"
+
     if buf_number == -1 or not M.buf_exists(buf_number) then
         vim.cmd("botright vsplit "..buf_name)
-
+        buf_number = vim.api.nvim_get_current_buf()
         vim.opt_local.readonly = true
-        vim.api.nvim_buf_set_option(0, "filetype", buf_type)
-        return vim.api.nvim_buf_get_number(0)
+        vim.api.nvim_buf_set_option(buf_number, "filetype", buf_type)
+        return buf_number
     end
 end
 
@@ -56,6 +57,6 @@ M.python_project_root = function()
     print("Buga")
 end
 
--- print(M.buf_open(M.python_buf_number, "Buga", "python"))
+-- print(M.buf_open(M.python_buf_number))
 
 return M
