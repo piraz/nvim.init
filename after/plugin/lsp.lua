@@ -83,15 +83,28 @@ lsp.configure("intelephense", {
     settings = {
         intelephense = {
             environment = {
+                documentRoot = vim.fn.getcwd(),
                 includePaths = {
                     ".",
+                    vim.fn.getcwd(),
                     "/usr/share/pear",
                     "/usr/share/php",
-                    "/home/fpiraz/source/candango",
+                    -- TODO:: add config based includePaths here
                 },
-            }
-        }
-    }
+            },
+            files = {
+                associations = {
+                    "*.php",
+                    "*.phtml",
+                    "*.inc", -- <=== BOOOOOiiii that was distrubing....
+                }
+            },
+            -- maxMemory = 4000,
+            -- trace = {
+            --     server = "verbose",
+            -- },
+        },
+    },
 })
 
 -- From https://stackoverflow.com/a/68998531/2887989
