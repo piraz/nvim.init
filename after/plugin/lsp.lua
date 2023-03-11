@@ -41,6 +41,9 @@ local cmp_mappings = lsp.defaults.cmp_mappings({
     ["<C-Space>"] = cmp.mapping.complete(),
 })
 
+cmp_mappings["<Tab>"] = nil
+cmp_mappings["<S-Tab>"] = nil
+
 -- kind of based on https://jdhao.github.io/2021/08/12/nvim_sumneko_lua_conf/
 -- but on the diagnostics we need use also and the workspace.library is not
 -- needed
@@ -150,38 +153,43 @@ lsp.on_attach(function(client, bufnr)
     -- end
 
     -- Buffer actions
-    vim.keymap.set("n", "<C-k>", "<Cmd>lua vim.lsp.buf.signature_help()<CR>",
+    vim.keymap.set("n", "<C-k>", "<Cmd>lua vim.lsp.buf.signatre_elp()<CR>",
         opts)
-    vim.keymap.set("n", "go", "<Cmd>lua vim.lsp.buf.type_definition()<CR>",
+    vim.keymap.set("n", "gd", "<Cmd>lua vim.lsp.buf.type_definition()<CR>",
         opts)
-    vim.keymap.set("n", "gi", "<Cmd>lua vim.lsp.buf.implementation()<CR>",
+    vim.keymap.set("n", "<leader>vim", "<Cmd>lua vim.lsp.buf.implementation()<CR>",
         opts)
     -- vim.keymap.set("n", "<F4>", "<Cmd>lua vim.lsp.buf.code_action()<CR>",
     --    opts)
-    vim.keymap.set("n", "ca", "<Cmd>lua vim.lsp.buf.code_action()<CR>", opts)
-    vim.keymap.set("n", "gdc", "<Cmd>lua vim.lsp.buf.declaration()<CR>", opts)
-    vim.keymap.set("n", "gdf", "<Cmd>lua vim.lsp.buf.definition()<CR>", opts)
+    vim.keymap.set("n", "<leader>vca", "<Cmd>lua vim.lsp.buf.code_action()<CR>", opts)
+    vim.keymap.set("n", "<leader>vdc", "<Cmd>lua vim.lsp.buf.declaration()<CR>", opts)
+    vim.keymap.set("n", "<leader>vdf", "<Cmd>lua vim.lsp.buf.definition()<CR>", opts)
     -- vim.keymap.set("n", "gr", "<Cmd>lua vim.lsp.buf.references()<CR>", opts)
-    vim.keymap.set("n", "grf", "<Cmd>lua vim.lsp.buf.references()<CR>", opts)
+    vim.keymap.del("n", "gr", opts)
+    vim.keymap.set("n", "<leader>vrf", "<Cmd>lua vim.lsp.buf.references()<CR>", opts)
     -- vim.keymap.set("n", "<F2>", "<Cmd>lua vim.lsp.buf.rename()<CR>", opts)
-    vim.keymap.set("n", "grn", "<Cmd>lua vim.lsp.buf.rename()<CR>", opts)
+    vim.keymap.set("n", "<leader>vrn", "<Cmd>lua vim.lsp.buf.rename()<CR>", opts)
     vim.keymap.set("n", "K", "<Cmd>lua vim.lsp.buf.hover()<CR>", opts)
-    vim.keymap.set("n", "gw", "<Cmd>lua vim.lsp.buf.workspace_symbol()<CR>",
+    vim.keymap.set("n", "<leader>vws", "<Cmd>lua vim.lsp.buf.workspace_symbol()<CR>",
         opts)
 
-    vim.keymap.set("n", "<leader>vdd",
+    vim.keymap.set("n", "<leader>vof",
         "<Cmd>lua vim.diagnostic.open_float()<CR>", opts)
     vim.keymap.set("n", "[d", "<Cmd>lua vim.diagnostic.goto_next()<CR>", opts)
     vim.keymap.set("n", "]d", "<Cmd>lua vim.diagnostic.goto_prev()<CR>", opts)
     vim.keymap.set("n", "<leader>vdh", "<Cmd>lua vim.diagnostic.hide()<CR>", opts)
     vim.keymap.set("n", "<leader>vds", "<Cmd>lua vim.diagnostic.show()<CR>", opts)
+    vim.keymap.set("n", "<leader>vth",
+        "<Cmd>lua vim.diagnostic.config({virtual_text = false})<CR>", opts)
+    vim.keymap.set("n", "<leader>vts",
+        "<Cmd>lua vim.diagnostic.config({virtual_text = true})<CR>", opts)
 end)
 
 lsp.setup()
 
--- vim.diagnostic.config({
---     virtual_text = true
--- })
+vim.diagnostic.config({
+    virtual_text = false
+})
 
 -- lspconfig.ruff_lsp.setup{
 --     on_attach = function(client, bufnr)
