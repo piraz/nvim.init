@@ -153,7 +153,7 @@ lsp.on_attach(function(client, bufnr)
     -- end
 
     -- Buffer actions
-    vim.keymap.set("n", "<C-k>", "<Cmd>lua vim.lsp.buf.signatre_elp()<CR>",
+    vim.keymap.set("n", "<C-k>", "<Cmd>lua vim.lsp.buf.signatre_help()<CR>",
         opts)
     vim.keymap.set("n", "gd", "<Cmd>lua vim.lsp.buf.type_definition()<CR>",
         opts)
@@ -173,7 +173,7 @@ lsp.on_attach(function(client, bufnr)
     vim.keymap.set("n", "<leader>vws", "<Cmd>lua vim.lsp.buf.workspace_symbol()<CR>",
         opts)
 
-    vim.keymap.set("n", "<leader>vof",
+    vim.keymap.set("n", "<leader>vdo",
         "<Cmd>lua vim.diagnostic.open_float()<CR>", opts)
     vim.keymap.set("n", "[d", "<Cmd>lua vim.diagnostic.goto_next()<CR>", opts)
     vim.keymap.set("n", "]d", "<Cmd>lua vim.diagnostic.goto_prev()<CR>", opts)
