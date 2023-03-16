@@ -155,7 +155,7 @@ lsp.on_attach(function(client, bufnr)
     -- Buffer actions
     vim.keymap.set("n", "<C-k>", "<Cmd>lua vim.lsp.buf.signatre_help()<CR>",
         opts)
-    vim.keymap.set("n", "gd", "<Cmd>lua vim.lsp.buf.type_definition()<CR>",
+    vim.keymap.set("n", "gd", "<Cmd>lua vim.lsp.buf.definition()<CR>",
         opts)
     vim.keymap.set("n", "<leader>vim", "<Cmd>lua vim.lsp.buf.implementation()<CR>",
         opts)
