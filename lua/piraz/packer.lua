@@ -15,7 +15,10 @@ return require("packer").startup(function(use)
 
     use ("nvim-lualine/lualine.nvim")
 
-    use("kylechui/nvim-surround")
+    use({
+        "kylechui/nvim-surround",
+        version = "*",
+     })
     use("nvim-tree/nvim-web-devicons")
     use("nvim-treesitter/nvim-treesitter", {run = ":TSUpdate"})
     use("nvim-treesitter/playground")
