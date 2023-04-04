@@ -22,4 +22,6 @@ function ColorMyPencils(color)
     vim.api.nvim_set_hl(0, "SignColumn", {bg = "none"})
 end
 
+vim.keymap.set("n", "<leader>sht", "<Cmd>:so $VIMRUNTIME/syntax/hitest.vim<CR>")
+
 ColorMyPencils("rose-pine")
