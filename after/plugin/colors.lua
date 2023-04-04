@@ -15,11 +15,18 @@ function ColorMyPencils(color)
     color = color or "nightfox"
     vim.cmd.colorscheme(color)
 
+    vim.api.nvim_set_hl(0, "GitSignsAdd", { bg = "none", fg = "#9ccfd8" })
+    vim.api.nvim_set_hl(0, "GitSignsChange", { bg = "none", fg = "#ebbcba" })
+    vim.api.nvim_set_hl(0, "GitSignsDelete", { bg = "none", fg = "#eb6f92" })
     vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
     vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
-    -- vim.api.nvim_set_hl(0, "NormalNC", { bg = "none" })
+    vim.api.nvim_set_hl(0, "NormalNC", { bg = "none" })
+    vim.api.nvim_set_hl(0, "TelescopeNormal", { bg = "none" })
+    vim.api.nvim_set_hl(0, "TelescopePromptNormal", { bg = "none" })
+    vim.api.nvim_set_hl(0, "TelescopeBorder", { bg = "none" })
     -- Fix Gitsign black SignColumn
     vim.api.nvim_set_hl(0, "SignColumn", {bg = "none"})
+    vim.api.nvim_set_hl(0, "ColorColumn", {bg = "#403d52"})
 end
 
 vim.keymap.set("n", "<leader>sht", "<Cmd>:so $VIMRUNTIME/syntax/hitest.vim<CR>")
