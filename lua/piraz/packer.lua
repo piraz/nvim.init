@@ -11,6 +11,8 @@ return require("packer").startup(function(use)
     -- use("ahmedkhalf/project.nvim")
 
 
+    use("raimon49/requirements.txt.vim")
+
     use("github/copilot.vim")
 
     use ("nvim-lualine/lualine.nvim")

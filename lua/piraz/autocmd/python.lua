@@ -70,7 +70,6 @@ function M.setup_virtualenv()
         local venv_name = project_name .. "_venv"
         local venv_root = plenary_path:new(Dev.user_home, "venvs")
         local project_venv = plenary_path:new(venv_root, venv_name)
-        print(venv_root)
 
         -- TODO: Create global virutalenv
         -- TODO: Install pynvim, worked with "pip install nvim"

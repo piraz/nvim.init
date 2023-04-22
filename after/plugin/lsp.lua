@@ -157,28 +157,35 @@ lsp.on_attach(function(client, bufnr)
         opts)
     vim.keymap.set("n", "gd", "<Cmd>lua vim.lsp.buf.definition()<CR>",
         opts)
-    vim.keymap.set("n", "<leader>vim", "<Cmd>lua vim.lsp.buf.implementation()<CR>",
-        opts)
+    vim.keymap.set("n", "<leader>vim",
+        "<Cmd>lua vim.lsp.buf.implementation()<CR>", opts)
     -- vim.keymap.set("n", "<F4>", "<Cmd>lua vim.lsp.buf.code_action()<CR>",
     --    opts)
-    vim.keymap.set("n", "<leader>vca", "<Cmd>lua vim.lsp.buf.code_action()<CR>", opts)
-    vim.keymap.set("n", "<leader>vdc", "<Cmd>lua vim.lsp.buf.declaration()<CR>", opts)
-    vim.keymap.set("n", "<leader>vdf", "<Cmd>lua vim.lsp.buf.definition()<CR>", opts)
+    vim.keymap.set("n", "<leader>vca",
+        "<Cmd>lua vim.lsp.buf.code_action()<CR>", opts)
+    vim.keymap.set("n", "<leader>vdc",
+        "<Cmd>lua vim.lsp.buf.declaration()<CR>", opts)
+    vim.keymap.set("n", "<leader>vdf",
+        "<Cmd>lua vim.lsp.buf.definition()<CR>", opts)
     -- vim.keymap.set("n", "gr", "<Cmd>lua vim.lsp.buf.references()<CR>", opts)
     vim.keymap.del("n", "gr", opts)
-    vim.keymap.set("n", "<leader>vrf", "<Cmd>lua vim.lsp.buf.references()<CR>", opts)
+    vim.keymap.set("n", "<leader>vrf",
+        "<Cmd>lua vim.lsp.buf.references()<CR>", opts)
     -- vim.keymap.set("n", "<F2>", "<Cmd>lua vim.lsp.buf.rename()<CR>", opts)
-    vim.keymap.set("n", "<leader>vrn", "<Cmd>lua vim.lsp.buf.rename()<CR>", opts)
+    vim.keymap.set("n", "<leader>vrn",
+        "<Cmd>lua vim.lsp.buf.rename()<CR>", opts)
     vim.keymap.set("n", "K", "<Cmd>lua vim.lsp.buf.hover()<CR>", opts)
-    vim.keymap.set("n", "<leader>vws", "<Cmd>lua vim.lsp.buf.workspace_symbol()<CR>",
-        opts)
+    vim.keymap.set("n", "<leader>vws",
+        "<Cmd>lua vim.lsp.buf.workspace_symbol()<CR>", opts)
 
     vim.keymap.set("n", "<leader>vdo",
         "<Cmd>lua vim.diagnostic.open_float()<CR>", opts)
     vim.keymap.set("n", "[d", "<Cmd>lua vim.diagnostic.goto_next()<CR>", opts)
     vim.keymap.set("n", "]d", "<Cmd>lua vim.diagnostic.goto_prev()<CR>", opts)
-    vim.keymap.set("n", "<leader>vdh", "<Cmd>lua vim.diagnostic.hide()<CR>", opts)
-    vim.keymap.set("n", "<leader>vds", "<Cmd>lua vim.diagnostic.show()<CR>", opts)
+    vim.keymap.set("n", "<leader>vdh",
+        "<Cmd>lua vim.diagnostic.hide()<CR>", opts)
+    vim.keymap.set("n", "<leader>vds",
+        "<Cmd>lua vim.diagnostic.show()<CR>", opts)
     vim.keymap.set("n", "<leader>vth",
         "<Cmd>lua vim.diagnostic.config({virtual_text = false})<CR>", opts)
     vim.keymap.set("n", "<leader>vts",
@@ -188,7 +195,7 @@ end)
 lsp.setup()
 
 vim.diagnostic.config({
-    virtual_text = false
+    virtual_text = true
 })
 
 -- lspconfig.ruff_lsp.setup{
