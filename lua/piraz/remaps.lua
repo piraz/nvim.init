@@ -3,13 +3,30 @@ local keymap = require("piraz.keymap")
 local nnoremap = keymap.nnoremap
 local vnoremap = keymap.vnoremap
 
+local function run_file()
+    local current_file_type = vim.api.nvim_buf_get_option(0, "filetype")
+    if current_file_type == "go" then
+        vim.cmd("GoRun")
+        return
+    end
+    if current_file_type == "lua" then
+        vim.cmd("so")
+        return
+    end
+    if current_file_type == "python" then
+        vim.cmd("!python %")
+        return
+    end
+end
 
 vim.g.mapleader = " "
 -- nnoremap("<leader>bls", "<cmd>ls<CR><cmd>b ")
 nnoremap("<leader>ee", "<cmd>Ex<CR>")
 nnoremap("<leader>ls", "<cmd>ls<CR>")
-nnoremap("<leader>so", "<cmd>so<CR>")
+nnoremap("<leader>so", run_file)
 nnoremap("<leader>pks", "<cmd>PackerSync<CR>")
+nnoremap("<leader>py", ":!python %<CR>")
+nnoremap("<leader>w", ":w<CR>")
 
 
 -- see: https://stackoverflow.com/a/73354675/2887989
