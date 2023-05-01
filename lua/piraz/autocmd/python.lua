@@ -8,8 +8,8 @@
 local Dev = require("piraz.dev")
 local Log = Dev.log
 local plenary_path = require("plenary.path")
+
 local M = {}
-local uv = vim.loop
 
 M.group = vim.api.nvim_create_augroup("PirazPy", { clear = true })
 
@@ -63,49 +63,11 @@ function M.is_python_project()
     return false
 end
 
-function M.setup_virtualenv()
-    if M.is_python_project() then
-        local cwd_x = vim.fn.split(vim.fn.getcwd(), Dev.sep)
-        local project_name = cwd_x[#cwd_x]
-        local venv_name = project_name .. "_venv"
-        local venv_root = plenary_path:new(Dev.user_home, "venvs")
-        local project_venv = plenary_path:new(venv_root, venv_name)
-
-        -- TODO: Create global virutalenv
-        -- TODO: Install pynvim, worked with "pip install nvim"
-        -- TODO: Setup global virutalenv into the nvim
-        -- let g:python3_host_prog="/home/fpiraz/venvs/testapp_venv/bin/python"
-        if not project_venv:exists() then
-            Log.warn("virtualenv from " .. project_name .. " doesn't exists")
-            Log.warn("creating virtualenv " .. project_name)
-            local timer = uv.new_timer()
-            if timer == nil then
-                return
-            end
-            vim.fn.jobstart(
-                {"python",  "-m", "venv", project_venv.filename},{
-                    stdout_buffered = true,
-                    on_stdout = function(_, _)
-                        Log.warn("virtualenv " .. project_name .. " created")
-                    end,
-                }
-            )
-            -- timer:start(4000, 0,vim.schedule_wrap( function()
-            --     Log.warn("buga")
-            --     vim.cmd("messages")
-            -- end))
-        end
-        -- TODO: Seput project virutalenv into the nvim
-        -- let $VIRTUAL_ENV=<project_virtualenv>
-        -- vim.cmd("let $VIRTUAL_ENV='<project_virtualenv>'")
-        -- let $PATH = <project_virtualenv_bin>:$PATH
-        -- vim.cmd("let $PATH = <project_virtualenv_bin>:$PATH")
-    end
-end
-
 function M.on_vim_start()
     if M.setup_called then
-        M.setup_virtualenv()
+        if M.is_python_project() then
+            Dev.setup_virtualenv()
+        end
     end
 end
 

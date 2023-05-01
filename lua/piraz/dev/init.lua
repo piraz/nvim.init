@@ -1,6 +1,7 @@
 -- Buffer creation see: https://stackoverflow.com/a/75240496
-local data = require("piraz.dev.data")
+local Data = require("piraz.dev.data")
 local plenary_path = require("plenary.path")
+local uv = vim.loop
 
 -- print(vim.inspect(data.config))
 
@@ -12,7 +13,6 @@ M.sep = plenary_path.path.sep
 M.user_home = plenary_path:new(vim.fn.environ()['HOME'])
 M.user_config_dir = plenary_path:new(M.user_home, ".piraz")
 M.user_config_projects_file = plenary_path:new(M.user_config_dir, "projects")
-print(M.user_config_projects_file)
 
 M.vim_did_enter = false
 
@@ -145,8 +145,6 @@ function M.setup()
     local config = vim.json.decode(file:read())
     file:close()
     -- print(vim.inspect(config))
-
-
 end
 
 -- M.buf_clear(32)
@@ -159,19 +157,102 @@ function M.get_path(file_path, sep)
     return file_path:match("(.*"..sep..")")
 end
 
+function M.setup_virtualenv(venv_prefix, callback)
+    local cwd_x = vim.fn.split(vim.fn.getcwd(), M.sep)
+    venv_prefix = venv_prefix or cwd_x[#cwd_x]
+    local venv_name = venv_prefix .. "_env"
+    local venv_root = plenary_path:new(M.user_home, "venvs")
+    local venv_path = plenary_path:new(venv_root, venv_name)
 
-function M.python_project_root()
-    local cwd = vim.fn.getcwd()
-    -- Solving firenado projects
-    -- if path.
-    -- print(vim.fn.getcwd())
-    print(vim.inspect(plenary_path))
-    print("Buga")
+    if not venv_path:exists() then
+        M.log.warn("virtualenv for " .. venv_prefix .. " doesn't exists")
+        M.log.warn("creating virtualenv for " .. venv_prefix)
+        local timer = uv.new_timer()
+        if timer == nil then
+            return
+        end
+        vim.fn.jobstart(
+            {
+                "python",  "-m", "venv", "--clear",
+                "--upgrade-deps", venv_path.filename,
+            },
+            {
+                stdout_buffered = true,
+                on_stdout = function(_, _)
+                    M.log.warn("virtualenv " .. venv_prefix .. " created")
+                    if callback ~= nil then
+                        callback(venv_path)
+                    end
+                end,
+            }
+        )
+        return
+        -- timer:start(4000, 0,vim.schedule_wrap( function()
+            --     Log.warn("buga")
+            --     vim.cmd("messages")
+            -- end))
+    end
+    if callback ~= nil then
+        callback(venv_path)
+    end
+    -- TODO: Seput project virutalenv into the nvim
+    -- let $VIRTUAL_ENV=<project_virtualenv>
+    -- vim.cmd("let $VIRTUAL_ENV='<project_virtualenv>'")
+    -- let $PATH = <project_virtualenv_bin>:$PATH
+    -- vim.cmd("let $PATH = <project_virtualenv_bin>:$PATH")
+end
+
+
+
+function M.set_python_global(venv_path)
+    -- TODO: Install pynvim, worked with "pip install nvim"
+    -- TODO: Setup global virutalenv into the nvim
+    local venv_bin = venv_path:joinpath("bin")
+    local venv_host_prog = venv_bin:joinpath("python")
+    -- local venv_activate = venv_bin:joinpath("activate")
+    local path = vim.fn.environ()["PATH"]
+    vim.cmd("let $PATH = '" .. venv_bin .. ":" .. path .. "'")
+    vim.cmd("let g:python3_host_prog='" .. venv_host_prog .. "'")
+    local timer = uv.new_timer()
+    if timer == nil then
+        return
+    end
+    vim.fn.jobstart(
+        { "pip", "show", "pynvim" },
+        {
+            stderr_buffered = true,
+            on_stderr = function(_, data)
+                if #data > 1 then
+                    M.log.warn(
+                        "installing pynvim at venv " .. venv_path.filename
+                    )
+                    M.install_pynvim(venv_path)
+                end
+                -- M.log.warn("virtualenv " .. venv_prefix .. " created")
+            end,
+        }
+    )
+end
+
+function M.install_pynvim(venv_path)
+    vim.fn.jobstart(
+        { "pip", "install", "pynvim" },
+        {
+            stdout_buffered = true,
+            on_stdout = function(_,_)
+                M.log.warn(
+                    "pynvim installed at " .. venv_path.filename ..
+                    " successfully"
+                )
+            end,
+        }
+    )
 end
 
 vim.api.nvim_create_autocmd("VimEnter", {
     callback = function ()
         M.vim_did_enter = true
+        M.setup_virtualenv("piraz_global", M.set_python_global)
     end,
     group = M.group,
 })
