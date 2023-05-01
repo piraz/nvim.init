@@ -122,19 +122,19 @@ function M.setup()
     end
 
     if not  M.user_config_dir:exists() then
-        M.log.warn("creating user config dir: " .. M.user_config_dir)
+        M.log.warn("creating user config dir: " .. M.user_config_dir.filename)
         M.user_config_dir:mkdir()
     end
 
     if not  M.user_config_projects_file:exists() then
         M.log.warn("creating user projects file: " ..
-            M.user_config_projects_file)
+            M.user_config_projects_file.filename)
         M.user_config_projects_file:touch()
         local file = io.open(M.user_config_projects_file.filename, "w")
         if file == nil then
             return
         end
-        file:write(vim.json.encode(data.config))
+        file:write(vim.json.encode(Data.config))
         file:close()
     end
 
