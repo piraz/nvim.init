@@ -56,19 +56,23 @@ end
 
 function M.is_python_project()
     -- TODO: Finish to check other python project possibilities
-    local project_root = vim.fn.getcwd()
-    if plenary_path.new(project_root, "setup.py"):exists() then
+    if Dev.project_root:joinpath("setup.py"):exists() then
         return true
     end
     return false
 end
 
-function M.on_vim_start()
+function M.setup_project_virtualenv()
     if M.setup_called then
         if M.is_python_project() then
-            Dev.setup_virtualenv()
+            local cwd_x = vim.fn.split(vim.fn.getcwd(), Dev.sep)
+            Dev.setup_virtualenv(cwd_x[#cwd_x], M.set_python)
         end
     end
+end
+
+function M.on_vim_start()
+    M.setup_project_virtualenv()
 end
 
 vim.api.nvim_create_autocmd("VimEnter", {
@@ -77,17 +81,26 @@ vim.api.nvim_create_autocmd("VimEnter", {
 })
 
 M.setup = function()
-    if Dev.vim_did_enter then
-        M.setup_virtualenv()
-    end
-
     M.setup_called = true
+
+    if Dev.vim_did_enter then
+        M.setup_project_virtualenv()
+    end
 
     vim.api.nvim_create_autocmd("BufWritePost", {
         callback = M.on_python_save,
         pattern = "*.py",
         group = M.group,
     })
+end
+
+function M.set_python(venv_path)
+    local venv_bin = venv_path:joinpath("bin")
+    -- local venv_activate = venv_bin:joinpath("activate")
+    Dev.add_to_path(venv_bin)
+    -- let $VIRTUAL_ENV=<project_virtualenv>
+    vim.cmd("let $VIRTUAL_ENV='" .. venv_path.filename .. "'")
+    vim.cmd("let $PYTHONPATH='.:" .. Dev.project_root.filename .. "'")
 end
 
 return M

@@ -13,6 +13,8 @@ M.sep = plenary_path.path.sep
 M.user_home = plenary_path:new(vim.fn.environ()['HOME'])
 M.user_config_dir = plenary_path:new(M.user_home, ".piraz")
 M.user_config_projects_file = plenary_path:new(M.user_config_dir, "projects")
+M.project_root = plenary_path:new(vim.fn.getcwd())
+
 
 M.vim_did_enter = false
 
@@ -179,7 +181,8 @@ function M.setup_virtualenv(venv_prefix, callback)
             {
                 stdout_buffered = true,
                 on_stdout = function(_, _)
-                    M.log.warn("virtualenv " .. venv_prefix .. " created")
+                    M.log.warn("virtualenv " .. venv_prefix ..
+                        " created successfully")
                     if callback ~= nil then
                         callback(venv_path)
                     end
@@ -202,16 +205,16 @@ function M.setup_virtualenv(venv_prefix, callback)
     -- vim.cmd("let $PATH = <project_virtualenv_bin>:$PATH")
 end
 
-
+function M.add_to_path(path)
+    local env_path = vim.fn.environ()["PATH"]
+    vim.cmd("let $PATH = '" .. path .. ":" .. env_path .. "'")
+end
 
 function M.set_python_global(venv_path)
-    -- TODO: Install pynvim, worked with "pip install nvim"
-    -- TODO: Setup global virutalenv into the nvim
     local venv_bin = venv_path:joinpath("bin")
     local venv_host_prog = venv_bin:joinpath("python")
     -- local venv_activate = venv_bin:joinpath("activate")
-    local path = vim.fn.environ()["PATH"]
-    vim.cmd("let $PATH = '" .. venv_bin .. ":" .. path .. "'")
+    M.add_to_path(venv_bin)
     vim.cmd("let g:python3_host_prog='" .. venv_host_prog .. "'")
     local timer = uv.new_timer()
     if timer == nil then
