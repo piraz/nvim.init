@@ -19,6 +19,8 @@ M.buf_name_suffix = " P)"
 M.setup_called = false
 M.vim_did_enter = false
 
+M.python_version = nil
+
 -- Output buffers table
 M.bufs_out = {}
 
@@ -70,6 +72,15 @@ function M.setup_project_virtualenv()
         if M.is_python_project() then
             local cwd_x = vim.fn.split(vim.fn.getcwd(), Dev.sep)
             Dev.setup_virtualenv(cwd_x[#cwd_x], M.set_python)
+            vim.fn.jobstart(
+            { M.preferred_python(), "--version" },
+            {
+                stdout_buffered = true,
+                on_stdout = function(_, data)
+                    local result = vim.fn.join(data, "")
+                    M.python_version = vim.fn.split(result, " ")[2]
+                end,
+            })
         end
     end
 end
@@ -83,19 +94,23 @@ function M.run_file(file)
     local relative_file = file:gsub(Dev.project_root.filename .. Dev.sep, "")
     local buf = M.chase(relative_file)
     Dev.buf_clear(buf)
-    Dev.buf_append(buf, { "Running " .. relative_file })
-    Dev.buf_append(buf, { "With Python:", "    " .. M.preferred_python(), ""})
+    Dev.buf_append(buf, {
+        "Piraz Chase",
+        "Running " .. relative_file,
+        "Python: " .. M.preferred_python(),
+        "Version: " .. M.python_version,
+        "",
+        ""
+    })
+
     vim.fn.jobstart(
-    {
-        M.preferred_python(), file,
-    },
+    { M.preferred_python(), file },
     {
         stdout_buffered = true,
         on_stdout = function(_, data)
             Dev.buf_append(buf, data)
         end,
-    }
-    )
+    })
     -- vim.cmd("!" .. pyraz.preferred_python() .. " " .. file_name)
 end
 

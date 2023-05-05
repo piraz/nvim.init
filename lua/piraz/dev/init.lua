@@ -5,8 +5,7 @@ local plenary_path = require("plenary.path")
 -- print(vim.inspect(data.config))
 
 
-local M =  {
-}
+local M =  {}
 
 M.sep = plenary_path.path.sep
 M.user_home = plenary_path:new(vim.fn.environ()['HOME'])
@@ -174,21 +173,20 @@ function M.setup_virtualenv(venv_prefix, callback)
         M.log.warn("virtualenv for " .. venv_prefix .. " doesn't exists")
         M.log.warn("creating virtualenv for " .. venv_prefix)
         vim.fn.jobstart(
-            {
-                "python",  "-m", "venv", "--clear",
-                "--upgrade-deps", venv_path.filename,
-            },
-            {
-                stdout_buffered = true,
-                on_stdout = function(_, _)
-                    M.log.warn("virtualenv " .. venv_prefix ..
-                        " created successfully")
-                    if callback ~= nil then
-                        callback(venv_path)
-                    end
-                end,
-            }
-        )
+        {
+            "python",  "-m", "venv", "--clear",
+            "--upgrade-deps", venv_path.filename,
+        },
+        {
+            stdout_buffered = true,
+            on_stdout = function(_, _)
+                M.log.warn("virtualenv " .. venv_prefix ..
+                " created successfully")
+                if callback ~= nil then
+                    callback(venv_path)
+                end
+            end,
+        })
         return
     end
     if callback ~= nil then
@@ -213,35 +211,33 @@ function M.set_python_global(venv_path)
     M.add_to_path(venv_bin)
     vim.cmd("let g:python3_host_prog='" .. venv_host_prog .. "'")
     vim.fn.jobstart(
-        { "pip", "show", "pynvim" },
-        {
-            stderr_buffered = true,
-            on_stderr = function(_, data)
-                if #data > 1 then
-                    M.log.warn(
-                        "installing pynvim at venv " .. venv_path.filename
-                    )
-                    M.install_pynvim(venv_path)
-                end
-                -- M.log.warn("virtualenv " .. venv_prefix .. " created")
-            end,
-        }
-    )
+    { "pip", "show", "pynvim" },
+    {
+        stderr_buffered = true,
+        on_stderr = function(_, data)
+            if #data > 1 then
+                M.log.warn(
+                "installing pynvim at venv " .. venv_path.filename
+                )
+                M.install_pynvim(venv_path)
+            end
+            -- M.log.warn("virtualenv " .. venv_prefix .. " created")
+        end,
+    })
 end
 
 function M.install_pynvim(venv_path)
     vim.fn.jobstart(
-        { "pip", "install", "pynvim" },
-        {
-            stdout_buffered = true,
-            on_stdout = function(_,_)
-                M.log.warn(
-                    "pynvim installed at " .. venv_path.filename ..
-                    " successfully"
-                )
-            end,
-        }
-    )
+    { "pip", "install", "pynvim" },
+    {
+        stdout_buffered = true,
+        on_stdout = function(_,_)
+            M.log.warn(
+            "pynvim installed at " .. venv_path.filename ..
+            " successfully"
+            )
+        end,
+    })
 end
 
 vim.api.nvim_create_autocmd("VimEnter", {
