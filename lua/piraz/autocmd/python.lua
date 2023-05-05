@@ -7,7 +7,6 @@
 
 local Dev = require("piraz.dev")
 local Log = Dev.log
-local plenary_path = require("plenary.path")
 
 local M = {}
 
@@ -25,7 +24,7 @@ M.bufs_out = {}
 
 -- print(M.bufs_out)
 
-M.buf_is_main = function(buf_number)
+function M.buf_is_main(buf_number)
     local lines = vim.api.nvim_buf_get_lines(buf_number, 0, -1, false)
     for _, line in ipairs(lines) do
         local pattern = "if __name__[ ]*==[ ]*[\"|']__main__[\"|'][ ]*:"
@@ -33,13 +32,12 @@ M.buf_is_main = function(buf_number)
             return true
         end
     end
-M.vim_did_enter = false
     return false
 end
 
 -- M.buf_out_register(file, name, python
 
-M.on_python_save = function()
+function M.on_python_save()
     local data = {
         buf = tonumber(vim.fn.expand("<abuf>")),
         file = vim.fn.expand("<afile>"),
@@ -52,6 +50,11 @@ M.on_python_save = function()
     end
     -- print(vim.inspect(data))
     -- vim.api.nvim_create_buf(false, false)
+end
+
+function M.chase(file)
+    local buf = Dev.buf_open(file .. "_run")
+    return buf
 end
 
 function M.is_python_project()
@@ -69,6 +72,31 @@ function M.setup_project_virtualenv()
             Dev.setup_virtualenv(cwd_x[#cwd_x], M.set_python)
         end
     end
+end
+
+function M.preferred_python()
+    local python = vim.api.nvim_get_var("python3_host_prog")
+    return vim.fn.environ()["$VIRTUAL_ENV"] or python
+end
+
+function M.run_file(file)
+    local relative_file = file:gsub(Dev.project_root.filename .. Dev.sep, "")
+    local buf = M.chase(relative_file)
+    Dev.buf_clear(buf)
+    Dev.buf_append(buf, { "Running " .. relative_file })
+    Dev.buf_append(buf, { "With Python:", "    " .. M.preferred_python(), ""})
+    vim.fn.jobstart(
+    {
+        M.preferred_python(), file,
+    },
+    {
+        stdout_buffered = true,
+        on_stdout = function(_, data)
+            Dev.buf_append(buf, data)
+        end,
+    }
+    )
+    -- vim.cmd("!" .. pyraz.preferred_python() .. " " .. file_name)
 end
 
 function M.on_vim_start()
