@@ -1,7 +1,6 @@
 -- Buffer creation see: https://stackoverflow.com/a/75240496
 local Data = require("piraz.dev.data")
 local plenary_path = require("plenary.path")
-local uv = vim.loop
 
 -- print(vim.inspect(data.config))
 
@@ -39,7 +38,7 @@ end
 function M.all_listed_buffers()
     local bufs = {}
     local count = 1
-    for i, buf in ipairs(vim.api.nvim_list_bufs()) do
+    for _, buf in ipairs(vim.api.nvim_list_bufs()) do
         if vim.api.nvim_buf_is_loaded(buf) then
             bufs[count] = buf
             count = count + 1
@@ -51,10 +50,10 @@ end
 
 function M.buf_from_name(name)
     for _, buf in ipairs(M.all_listed_buffers()) do
-        local name_x = vim.api.nvim_buf_get_name(buf):gsub(
-            vim.fn.getcwd() .. "/", ""
+        local listed_name = vim.api.nvim_buf_get_name(buf):gsub(
+            M.project_root .. M.sep, ""
         )
-        if name_x == name then
+        if listed_name == name then
             return buf
         end
     end
@@ -78,7 +77,8 @@ function M.buf_open(name, type)
     if buf == -1 or not M.buf_is_visible(buf) then
         vim.cmd("botright vsplit " .. name)
         buf = vim.api.nvim_get_current_buf()
-        vim.opt_local.readonly = true
+        -- vim.opt_local.readonly = true
+        vim.api.nvim_buf_set_option(buf, "readonly", true)
         vim.api.nvim_buf_set_option(buf, "filetype", type)
         vim.api.nvim_set_current_win(cur_win)
         return buf
@@ -89,10 +89,13 @@ end
 -- print(vim.inspect(M.all_listed_buffers()))
 
 function M.buf_clear(buf)
+    vim.api.nvim_buf_set_option(buf, "readonly", false)
     vim.api.nvim_buf_set_lines(buf, 0, -1, false, {})
+    vim.api.nvim_buf_set_option(buf, "readonly", true)
 end
 
 function M.buf_append(buf, lines)
+    vim.api.nvim_buf_set_option(buf, "readonly", false)
     local line_count = #vim.api.nvim_buf_get_lines(buf, 0, -1, false)
     if line_count < 2 then
         local first_line = vim.api.nvim_buf_get_lines(buf, 0, -1, false)[1]
@@ -101,6 +104,7 @@ function M.buf_append(buf, lines)
         end
     end
     vim.api.nvim_buf_set_lines(buf, line_count, -1, false, lines)
+    vim.api.nvim_buf_set_option(buf, "readonly", true)
 end
 
 function M.setup()
@@ -169,10 +173,6 @@ function M.setup_virtualenv(venv_prefix, callback)
     if not venv_path:exists() then
         M.log.warn("virtualenv for " .. venv_prefix .. " doesn't exists")
         M.log.warn("creating virtualenv for " .. venv_prefix)
-        local timer = uv.new_timer()
-        if timer == nil then
-            return
-        end
         vim.fn.jobstart(
             {
                 "python",  "-m", "venv", "--clear",
@@ -190,10 +190,6 @@ function M.setup_virtualenv(venv_prefix, callback)
             }
         )
         return
-        -- timer:start(4000, 0,vim.schedule_wrap( function()
-            --     Log.warn("buga")
-            --     vim.cmd("messages")
-            -- end))
     end
     if callback ~= nil then
         callback(venv_path)
@@ -216,10 +212,6 @@ function M.set_python_global(venv_path)
     -- local venv_activate = venv_bin:joinpath("activate")
     M.add_to_path(venv_bin)
     vim.cmd("let g:python3_host_prog='" .. venv_host_prog .. "'")
-    local timer = uv.new_timer()
-    if timer == nil then
-        return
-    end
     vim.fn.jobstart(
         { "pip", "show", "pynvim" },
         {
