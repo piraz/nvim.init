@@ -29,6 +29,7 @@ lsp.ensure_installed({
     "pylsp",
     "lua_ls",
     "ruff_lsp",
+    "yamlls",
     "tsserver",
 })
 
@@ -110,6 +111,13 @@ lsp.configure("intelephense", {
     },
 })
 
+lsp.configure("yamlls", {
+    settings = {
+        yaml = {
+            keyOrdering = false,
+        },
+    },
+})
 -- From https://stackoverflow.com/a/68998531/2887989
 -- vim.api.nvim_set_current_dir(vim.fn.getcwd())
 -- local project_dir = Dev.get_path(vim.fn.expand("%:p"))
@@ -195,7 +203,8 @@ end)
 lsp.setup()
 
 vim.diagnostic.config({
-    virtual_text = true
+    virtual_text = false,
+    severity_sort = true
 })
 
 -- lspconfig.ruff_lsp.setup{
