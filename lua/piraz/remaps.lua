@@ -1,10 +1,12 @@
 local keymap = require("piraz.keymap")
+local pyraz = require("piraz.autocmd.python")
 
 local nnoremap = keymap.nnoremap
 local vnoremap = keymap.vnoremap
 
 local function run_file()
     local current_file_type = vim.api.nvim_buf_get_option(0, "filetype")
+    local file_name = vim.api.nvim_buf_get_name(0)
     if current_file_type == "go" then
         vim.cmd("GoRun")
         return
@@ -14,7 +16,7 @@ local function run_file()
         return
     end
     if current_file_type == "python" then
-        vim.cmd("!python %")
+        pyraz.run_file(file_name)
         return
     end
 end
