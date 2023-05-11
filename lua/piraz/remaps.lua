@@ -4,10 +4,25 @@ local pyraz = require("piraz.autocmd.python")
 local nnoremap = keymap.nnoremap
 local vnoremap = keymap.vnoremap
 
+local function is_go_test(buf_number)
+    local lines = vim.api.nvim_buf_get_lines(buf_number, 0, -1, false)
+    for _, line in ipairs(lines) do
+        local pattern = "func Test[%w]*[ ]*[\\(][ ]*[%w]*[ ]*[\\*][%w]*.T"
+        if string.match(line, pattern) then
+            return true
+        end
+    end
+    return false
+end
+
 local function run_file()
     local current_file_type = vim.api.nvim_buf_get_option(0, "filetype")
     local file_name = vim.api.nvim_buf_get_name(0)
     if current_file_type == "go" then
+        if is_go_test(0) then
+            vim.cmd("GoTestFile")
+            return
+        end
         vim.cmd("GoRun")
         return
     end
