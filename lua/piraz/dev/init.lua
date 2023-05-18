@@ -1,17 +1,17 @@
 -- Buffer creation see: https://stackoverflow.com/a/75240496
 local Data = require("piraz.dev.data")
-local plenary_path = require("plenary.path")
+local Path = require("plenary.path")
 
 -- print(vim.inspect(data.config))
 
 
 local M =  {}
 
-M.sep = plenary_path.path.sep
-M.user_home = plenary_path:new(vim.fn.environ()['HOME'])
-M.user_config_dir = plenary_path:new(M.user_home, ".piraz")
-M.user_config_projects_file = plenary_path:new(M.user_config_dir, "projects")
-M.project_root = plenary_path:new(vim.fn.getcwd())
+M.sep = Path.path.sep
+M.user_home = Path:new(vim.fn.environ()['HOME'])
+M.user_config_dir = Path:new(M.user_home, ".piraz")
+M.user_config_projects_file = Path:new(M.user_config_dir, "projects")
+M.project_root = Path:new(vim.fn.getcwd())
 
 
 M.vim_did_enter = false
@@ -118,9 +118,9 @@ function M.setup()
     if vim.fn.environ()['PIRAZ_HOME'] then
         M.log.trace("changing user config home to " ..
             vim.fn.environ()['PIRAZ_HOME'])
-        M.user_home = plenary_path:new(vim.fn.environ()['PIRAZ_HOME'])
-        M.user_config_dir = plenary_path:new(M.user_home, ".piraz")
-        M.user_config_projects_file = plenary_path:new(
+        M.user_home = Path:new(vim.fn.environ()['PIRAZ_HOME'])
+        M.user_config_dir = Path:new(M.user_home, ".piraz")
+        M.user_config_projects_file = Path:new(
             M.user_config_dir,
             "projects"
         )
@@ -166,8 +166,8 @@ function M.setup_virtualenv(venv_prefix, callback)
     local cwd_x = vim.fn.split(vim.fn.getcwd(), M.sep)
     venv_prefix = venv_prefix or cwd_x[#cwd_x]
     local venv_name = venv_prefix .. "_env"
-    local venv_root = plenary_path:new(M.user_home, "venvs")
-    local venv_path = plenary_path:new(venv_root, venv_name)
+    local venv_root = Path:new(M.user_home, "venvs")
+    local venv_path = Path:new(venv_root, venv_name)
 
     if not venv_path:exists() then
         M.log.warn("virtualenv for " .. venv_prefix .. " doesn't exists")

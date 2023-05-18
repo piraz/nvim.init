@@ -7,6 +7,7 @@
 
 local Dev = require("piraz.dev")
 local Log = Dev.log
+local Path = require("plenary.path")
 
 local M = {}
 
@@ -86,8 +87,12 @@ function M.setup_project_virtualenv()
 end
 
 function M.preferred_python()
-    local python = vim.api.nvim_get_var("python3_host_prog")
-    return vim.fn.environ()["$VIRTUAL_ENV"] or python
+    if vim.fn.environ()["VIRTUAL_ENV"] ~= nil then
+        return Path:new(
+            vim.fn.environ()["VIRTUAL_ENV"], "bin", "python"
+        ).filename
+    end
+    return vim.api.nvim_get_var("python3_host_prog")
 end
 
 function M.run_file(file)
@@ -123,7 +128,7 @@ vim.api.nvim_create_autocmd("VimEnter", {
     group = M.group,
 })
 
-M.setup = function()
+function M.setup()
     M.setup_called = true
 
     if Dev.vim_did_enter then
