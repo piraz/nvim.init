@@ -112,7 +112,11 @@ function M.run_file(file)
     { M.preferred_python(), file },
     {
         stdout_buffered = true,
+        stderr_buffered = true,
         on_stdout = function(_, data)
+            Dev.buf_append(buf, data)
+        end,
+        on_stderr = function(_, data)
             Dev.buf_append(buf, data)
         end,
     })
