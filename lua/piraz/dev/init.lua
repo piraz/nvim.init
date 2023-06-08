@@ -210,32 +210,35 @@ function M.set_python_global(venv_path)
     -- local venv_activate = venv_bin:joinpath("activate")
     M.add_to_path(venv_bin)
     vim.cmd("let g:python3_host_prog='" .. venv_host_prog .. "'")
+    M.install_package(venv_path, "build", "build[virtualenv]")
+    M.install_package(venv_path, "pynvim")
+    M.install_package(venv_path, "twine")
+    M.install_package(venv_path, "wheel")
+end
+
+function M.install_package(venv_path, package, install)
+    install = install or package
     vim.fn.jobstart(
-    { "pip", "show", "pynvim" },
+    { "pip", "show", package },
     {
         stderr_buffered = true,
         on_stderr = function(_, data)
             if #data > 1 then
                 M.log.warn(
-                "installing pynvim at venv " .. venv_path.filename
+                "installing " .. package .. " at venv " .. venv_path.filename
                 )
-                M.install_pynvim(venv_path)
+                vim.fn.jobstart(
+                { "pip", "install", package },
+                {
+                    stdout_buffered = true,
+                    on_stdout = function(_,_)
+                        M.log.warn(
+                        package .. " installed at " .. venv_path.filename ..
+                        " successfully"
+                        )
+                    end,
+                })
             end
-            -- M.log.warn("virtualenv " .. venv_prefix .. " created")
-        end,
-    })
-end
-
-function M.install_pynvim(venv_path)
-    vim.fn.jobstart(
-    { "pip", "install", "pynvim" },
-    {
-        stdout_buffered = true,
-        on_stdout = function(_,_)
-            M.log.warn(
-            "pynvim installed at " .. venv_path.filename ..
-            " successfully"
-            )
         end,
     })
 end
