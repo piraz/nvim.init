@@ -4,6 +4,17 @@
 -- Only required if you have packer configured as `opt`
 vim.cmd ([[packadd packer.nvim]])
 
+local function path_exists(path)
+    local file = io.open(path,"r")
+    if (file ~= nil) then
+        io.close(file)
+        return true
+    end
+    return false
+end
+
+local USER_HOME = vim.fn.environ()['HOME']
+
 return require("packer").startup(function(use)
     -- Packer can manage itself
     use("wbthomason/packer.nvim")
@@ -64,6 +75,12 @@ return require("packer").startup(function(use)
     -- use("nvim-lua/plenary.nvim")
     use("theprimeagen/harpoon")
 
+    if(path_exists(USER_HOME .. "/source/candango/chase")) then
+        use("~/source/candango/chase")
+    else
+        use("candango/chase.nvim")
+    end
+
     use("mbbill/undotree")
     use("tpope/vim-fugitive")
     -- use("airblade/vim-gitgutter")
@@ -122,4 +139,3 @@ return require("packer").startup(function(use)
     }
 
 end)
-

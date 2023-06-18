@@ -1,5 +1,5 @@
 local keymap = require("piraz.keymap")
-local pyraz = require("piraz.autocmd.python")
+local chasepy = require("chase.python")
 
 local nnoremap = keymap.nnoremap
 local vnoremap = keymap.vnoremap
@@ -27,11 +27,11 @@ local function run_file()
         return
     end
     if current_file_type == "lua" then
-        vim.cmd("so")
+        vim.cmd("so %")
         return
     end
     if current_file_type == "python" then
-        pyraz.run_file(file_name)
+        chasepy.run_file(file_name)
         return
     end
 end
