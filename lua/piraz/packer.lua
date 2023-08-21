@@ -5,7 +5,7 @@
 vim.cmd ([[packadd packer.nvim]])
 
 local function path_exists(path)
-    local file = io.open(path,"r")
+    local file = io.open(path, "r")
     if (file ~= nil) then
         io.close(file)
         return true
@@ -19,9 +19,6 @@ return require("packer").startup(function(use)
     -- Packer can manage itself
     use("wbthomason/packer.nvim")
 
-    -- use("ahmedkhalf/project.nvim")
-
-
     use("raimon49/requirements.txt.vim")
 
     use("github/copilot.vim")
@@ -31,16 +28,17 @@ return require("packer").startup(function(use)
     use({
         "kylechui/nvim-surround",
         version = "*",
-     })
+    })
+
     use("nvim-tree/nvim-web-devicons")
     use("nvim-treesitter/nvim-treesitter", {run = ":TSUpdate"})
     use("nvim-treesitter/playground")
     use("nvim-treesitter/nvim-treesitter-textobjects")
 
     use {
-        'nvim-telescope/telescope.nvim', tag = '0.1.1',
-        -- or                            , branch = '0.1.x',
-        requires = { {'nvim-lua/plenary.nvim'} }
+        "nvim-telescope/telescope.nvim", tag = "0.1.2",
+        -- or                            , branch = "0.1.x",
+        requires = { {"nvim-lua/plenary.nvim"} }
     }
 
     use("lukas-reineke/indent-blankline.nvim")
