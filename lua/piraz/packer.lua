@@ -1,5 +1,6 @@
 -- This file can be loaded by calling `lua require("plugins")` from your
 -- init.vim
+local Dev = require("piraz.dev")
 
 -- Only required if you have packer configured as `opt`
 vim.cmd ([[packadd packer.nvim]])
@@ -13,15 +14,15 @@ local function path_exists(path)
     return false
 end
 
-local USER_HOME = vim.fn.environ()['HOME']
-
 return require("packer").startup(function(use)
     -- Packer can manage itself
     use("wbthomason/packer.nvim")
 
     use("raimon49/requirements.txt.vim")
 
-    use("github/copilot.vim")
+    if Dev.is_linux() then
+        use("github/copilot.vim")
+    end
 
     use ("nvim-lualine/lualine.nvim")
 
@@ -72,7 +73,7 @@ return require("packer").startup(function(use)
 
     use("theprimeagen/harpoon")
 
-    if(path_exists(USER_HOME .. "/source/candango/chase")) then
+    if(path_exists(Dev.USER_HOME .. "/source/candango/chase")) then
         use("~/source/candango/chase")
     else
         use("candango/chase.nvim")
