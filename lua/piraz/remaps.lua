@@ -46,6 +46,7 @@ end
 
 vim.g.mapleader = " "
 -- nnoremap("<leader>bls", "<cmd>ls<CR><cmd>b ")
+nnoremap("<leader>bd", ":bd<CR>")
 nnoremap("<leader>ee", "<cmd>Ex<CR>")
 nnoremap("<leader>ls", "<cmd>ls<CR>")
 nnoremap("<leader>so", run_file)
