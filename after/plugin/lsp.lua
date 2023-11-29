@@ -118,6 +118,16 @@ lsp.configure("yamlls", {
         },
     },
 })
+
+lsp.configure("gopls", {
+    settings = {
+        gopls = {
+            env = {
+                GOFLAGS = "-tags=integration,end2end,live,unit",
+            },
+        },
+    },
+})
 -- From https://stackoverflow.com/a/68998531/2887989
 -- vim.api.nvim_set_current_dir(vim.fn.getcwd())
 -- local project_dir = Dev.get_path(vim.fn.expand("%:p"))
