@@ -1,7 +1,7 @@
 local dev = require("piraz.dev")
 local log = dev.log
 
-local loaded, mark = pcall(require, "harpoon.mark")
+local loaded, harpoon = pcall(require, "harpoon")
 if not loaded then
     if log then
         log.debug("harpoon not found")
@@ -9,12 +9,13 @@ if not loaded then
     return
 end
 
-local ui = require("harpoon.ui")
+harpoon:setup()
 
-vim.keymap.set("n", "<leader>a", mark.add_file)
-vim.keymap.set("n", "<C-h>", ui.toggle_quick_menu)
-vim.keymap.set("n", "<leader>1", function() ui.nav_file(1) end)
-vim.keymap.set("n", "<leader>2", function() ui.nav_file(2) end)
-vim.keymap.set("n", "<leader>3", function() ui.nav_file(3) end)
-vim.keymap.set("n", "<leader>4", function() ui.nav_file(4) end)
-
+vim.keymap.set("n", "<leader>a", function() harpoon:list():append() end)
+vim.keymap.set("n", "<C-h>", function()
+    harpoon.ui:toggle_quick_menu(harpoon:list())
+end)
+vim.keymap.set("n", "<leader>1", function() harpoon:list():select(1) end)
+vim.keymap.set("n", "<leader>2", function() harpoon:list():select(2) end)
+vim.keymap.set("n", "<leader>3", function() harpoon:list():select(3) end)
+vim.keymap.set("n", "<leader>4", function() harpoon:list():select(4) end)

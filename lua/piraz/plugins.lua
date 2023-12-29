@@ -61,7 +61,10 @@ local plugins = {
     { "L3MON4D3/LuaSnip" },                  -- Required
     { "rafamadriz/friendly-snippets" },
 
-    { "theprimeagen/harpoon" },
+    {
+        "theprimeagen/harpoon",  branch = "harpoon2",
+        dependencies = { "nvim-lua/plenary.nvim" }
+    },
 
     { "mbbill/undotree" },
     { "tpope/vim-fugitive" },
