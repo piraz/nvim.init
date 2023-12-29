@@ -1,3 +1,5 @@
 require("piraz.remaps")
 require("piraz.set")
-require("piraz.packer")
+require("piraz.lazy")
+require("piraz.plugins")
+package.loaded["piraz.dev"] = nil

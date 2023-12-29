@@ -1,3 +1,4 @@
+local Dev = require("piraz.dev")
 -- vim.opt.swapfile = false
 -- vim.opt.backup = false
 vim.opt.guicursor = ""
@@ -20,7 +21,9 @@ vim.opt.listchars = "tab:> ,trail:-,nbsp:+"
 
 vim.opt.swapfile = false
 vim.opt.backup = false
-vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
+vim.opt.undodir = vim.fn.stdpath("data") .. table.concat({
+    "", "undodir"
+}, Dev.sep)
 vim.opt.undofile = true
 
 -- vim.opt.hlsearch = false

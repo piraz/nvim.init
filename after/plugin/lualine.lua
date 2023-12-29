@@ -3,7 +3,9 @@ local log = dev.log
 
 local loaded, lualine = pcall(require, "lualine")
 if not loaded then
-    log.debug("lualine not found")
+    if log then
+        log.debug("lualine not found")
+    end
     return
 end
 

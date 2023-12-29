@@ -3,7 +3,9 @@ local log = dev.log
 
 local loaded, indent_blankline = pcall(require, "ibl")
 if not loaded then
-    log.debug("ident blankline not found")
+    if log then
+        log.debug("ident blankline not found")
+    end
     return
 end
 

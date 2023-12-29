@@ -3,7 +3,9 @@ local log = dev.log
 
 local loaded, telescope = pcall(require, "telescope")
 if not loaded then
-    log.debug("telescope not found")
+    if log then
+        log.debug("telescope not found")
+    end
     return
 end
 

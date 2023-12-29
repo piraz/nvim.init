@@ -3,7 +3,9 @@ local log = dev.log
 
 local loaded, treesitter_configs = pcall(require, "nvim-treesitter.configs")
 if not loaded then
-    log.debug("treesitter not found")
+    if log then
+        log.debug("treesitter not found")
+    end
     return
 end
 

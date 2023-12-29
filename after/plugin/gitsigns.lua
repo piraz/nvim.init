@@ -3,7 +3,9 @@ local log = dev.log
 
 local loaded, gitsigns = pcall(require, "gitsigns")
 if not loaded then
-    log.debug("gitsigns not found")
+    if log then
+        log.debug("gitsigns not found")
+    end
     return
 end
 

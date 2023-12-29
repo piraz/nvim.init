@@ -3,7 +3,9 @@ local log = dev.log
 
 local loaded, trouble = pcall(require, "trouble")
 if not loaded then
-    log.debug("trouble not found")
+    if log then
+        log.debug("trouble not found")
+    end
     return
 end
 

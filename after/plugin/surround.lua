@@ -3,7 +3,9 @@ local log = dev.log
 
 local loaded, surround = pcall(require, "nvim-surround")
 if not loaded then
-    log.debug("nvim-surround not found")
+    if log then
+        log.debug("nvim-surround not found")
+    end
     return
 end
 

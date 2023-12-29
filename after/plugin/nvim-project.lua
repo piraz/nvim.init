@@ -3,7 +3,9 @@ local log = dev.log
 
 local loaded, project = pcall(require, "project_nvim")
 if not loaded then
-    log.debug("nvim-project not found")
+    if log then
+        log.debug("nvim-project not found")
+    end
     return
 end
 

@@ -3,7 +3,9 @@ local log = dev.log
 
 local loaded, mark = pcall(require, "harpoon.mark")
 if not loaded then
-    log.debug("harpoon not found")
+    if log then
+        log.debug("harpoon not found")
+    end
     return
 end
 

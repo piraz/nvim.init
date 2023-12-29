@@ -15,5 +15,7 @@ if loaded then
     vim.keymap.set("n", "<leader>gt", function() vim.cmd("GitGutterToggle") end)
     vim.keymap.set("n", "<leader>gu", "<Plug>(GitGutterUndoHunk)")
 else
-    log.debug("vim.gitgutter not found")
+    if log then
+        log.debug("vim.gitgutter not found")
+    end
 end
