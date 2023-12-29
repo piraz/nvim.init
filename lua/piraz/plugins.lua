@@ -98,7 +98,7 @@ local chase_source = table.concat({
 }, Dev.sep)
 
 if(Dev.path_exists(chase_source)) then
-    plugins[#plugins + 1] = { chase_source }
+    plugins[#plugins + 1] = { chase_source, dev = true }
 else
     plugins[#plugins + 1] = { "candango/chase.nvim" }
 end

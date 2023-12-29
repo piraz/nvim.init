@@ -34,8 +34,6 @@ if M.is_windows() then
 	M.sep = "\\"
 end
 
-print(M.USER_HOME)
-
 M.log = nil
 
 if loaded then
