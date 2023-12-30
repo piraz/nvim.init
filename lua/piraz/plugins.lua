@@ -97,8 +97,10 @@ local chase_source = table.concat({
     Dev.USER_HOME, "source", "candango", "chase"
 }, Dev.sep)
 
-if(Dev.path_exists(chase_source)) then
-    plugins[#plugins + 1] = { chase_source, dev = true }
+if Dev.path_exists(chase_source) then
+    plugins[#plugins + 1] = {
+        "candango/chase.nvim", dev = true, name = "chase"
+    }
 else
     plugins[#plugins + 1] = { "candango/chase.nvim" }
 end
@@ -107,4 +109,10 @@ if Dev.is_linux() or Dev.is_windows() then
     plugins[#plugins + 1] = { "github/copilot.vim" }
 end
 
-require("lazy").setup(plugins)
+local opts = {
+    dev = {
+        path = "~/source/candango",
+    },
+}
+
+require("lazy").setup(plugins, opts)
