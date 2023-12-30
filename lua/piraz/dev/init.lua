@@ -19,12 +19,18 @@ function M.is_windows()
 end
 
 function M.path_exists(path)
-    local file = io.open(path, "r")
-    if (file ~= nil) then
-        io.close(file)
-        return true
+    -- see: https://stackoverflow.com/a/40195356
+    local ok, err, code = os.rename(path, path)
+    if not ok then
+        if code == 13 then
+            -- Permission denied, but it exists
+            return true
+        end
     end
-    return false
+    if err ~= nil then
+        return false
+    end
+    return ok
 end
 
 M.sep = "/"
