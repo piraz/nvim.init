@@ -7,7 +7,7 @@ configuration, and I'm really thankful about his crazy explanation on
 [this video](https://www.youtube.com/watch?v=w7i4amO_zaE&) but right now this
 project reflects what I need on neovim daily.
 
-The project is submodule of my [.dofiles](https://github.com/piraz/.dotfiles)
+The project is a submodule of my [.dofiles](https://github.com/piraz/.dotfiles)
 where I load most of my configurations for my Linux, Mac.
 
 I recently made some changes, helping a friend, making this, and my dotfiles
