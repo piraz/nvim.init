@@ -11,5 +11,5 @@ The project is a submodule of my [dotfiles](https://github.com/piraz/.dotfiles)
 where I load most of my configurations for my Linux and Mac.
 
 I recently made some changes, helping a friend, making this, and my dotfiles
-able to run on Windows. It works, it took a long time to do it, and I still
-ask my self why I did it.
+able to run on Windows. It works, took a long time to do it, and I stil ask my
+self why I did it.
