@@ -8,7 +8,7 @@ configuration, and I'm really thankful about his crazy explanation on
 project reflects what I need on neovim daily.
 
 The project is a submodule of my [dotfiles](https://github.com/piraz/.dotfiles)
-where I load most of my configurations for my Linux, Mac.
+where I load most of my configurations for my Linux and Mac.
 
 I recently made some changes, helping a friend, making this, and my dotfiles
 able to run on Windows. It works, it took a long time to do that, and I still
