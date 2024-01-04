@@ -33,6 +33,7 @@ if loaded then
         "prosemd_lsp", -- proselint should be installed manually
         "pylsp",
         "lua_ls",
+        "ltex",
         "ruff_lsp",
         "yamlls",
         "tsserver",
