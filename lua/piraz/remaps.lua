@@ -76,7 +76,7 @@ vnoremap("<leader><leader>d", [["add]])
 -- see: https://stackoverflow.com/a/63542511/2887989
 -- By the way, to select the word under the cursor: * or g*
 nnoremap("<leader>g8", "g*")
-nnoremap("<leader>cs", function() vim.cmd([[let @/ = ""]]) end)
+nnoremap("<leader>sc", function() vim.cmd([[let @/ = ""]]) end)
 
 -- From: https://superuser.com/a/310424
 -- TODO: See if this good: nnoremap()
