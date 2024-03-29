@@ -31,17 +31,6 @@ local function run_file()
         vim.cmd("so %")
         return
     end
-    local loaded, chasepy = pcall(require, "chase.python")
-    if loaded then
-        if current_file_type == "python" then
-            chasepy.run_file(file_name)
-            return
-        end
-    else
-        log.debug(
-            "chase.python not found, run_file remap won't run python files"
-        )
-    end
 end
 
 vim.g.mapleader = " "
