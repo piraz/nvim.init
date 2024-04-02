@@ -23,10 +23,10 @@ gitsigns.setup {
     linehl     = false, -- Toggle with `:Gitsigns toggle_linehl`
     word_diff  = false, -- Toggle with `:Gitsigns toggle_word_diff`
     watch_gitdir = {
-        interval = 1000,
         follow_files = true
     },
-    attach_to_untracked = true,
+    auto_attach = true,
+    attach_to_untracked = false,
     -- Toggle with `:Gitsigns toggle_current_line_blame`
     current_line_blame = false,
     current_line_blame_opts = {
@@ -35,6 +35,7 @@ gitsigns.setup {
         virt_text_pos = "eol",
         delay = 500,
         ignore_whitespace = false,
+        virt_text_priority = 100,
     },
     current_line_blame_formatter =
     "<author>, <author_time:%Y-%m-%d> - <summary>",
@@ -51,9 +52,6 @@ gitsigns.setup {
         relative = "cursor",
         row = 0,
         col = 1
-    },
-    yadm = {
-        enable = false
     },
 }
 
