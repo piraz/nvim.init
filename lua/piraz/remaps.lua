@@ -43,6 +43,7 @@ nnoremap("<leader>lzs", "<cmd>Lazy sync<CR>")
 nnoremap("<leader>w", ":w<CR>")
 nnoremap("<leader>dff", [[0vwh"_d]])
 nnoremap("<leader>dfu", [[0vwh"_di<bs><esc>li]])
+nnoremap("<leader>dfd", [[f vc<CR><esc>]])
 
 -- see: https://stackoverflow.com/a/73354675/2887989
 nnoremap("<leader>y", [["+y]])
