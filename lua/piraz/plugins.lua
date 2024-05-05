@@ -108,9 +108,9 @@ else
     plugins[#plugins + 1] = { "candango/chase.nvim" }
 end
 
-if Dev.is_linux() or Dev.is_windows() then
-    plugins[#plugins + 1] = { "github/copilot.vim" }
-end
+-- if Dev.is_linux() or Dev.is_windows() then
+--     plugins[#plugins + 1] = { "github/copilot.vim" }
+-- end
 
 local opts = {
     dev = {
