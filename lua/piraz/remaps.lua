@@ -33,6 +33,26 @@ local function run_file()
     end
 end
 
+local function insert_error()
+    local current_file_type = vim.api.nvim_buf_get_option(0, "filetype")
+    if current_file_type == "go" then
+        vim.api.nvim_feedkeys(
+            vim.api.nvim_eval(
+                '"oif err != nil {\\<CR>}\\<Esc>Oreturn err\\<Esc>"'
+            ), "m", true
+        )
+        return
+    end
+    if current_file_type == "python" then
+        vim.api.nvim_feedkeys(
+            vim.api.nvim_eval(
+                '"otry:\\<CR>except e:\\<CR>\\<Tab>pass\\<Esc>kO\\<Tab>\\<Esc>"'
+            ), "m", true
+        )
+        return
+    end
+end
+
 vim.g.mapleader = " "
 -- nnoremap("<leader>bls", "<cmd>ls<CR><cmd>b ")
 nnoremap("<leader>bd", ":bd<CR>")
@@ -44,6 +64,7 @@ nnoremap("<leader>w", ":w<CR>")
 nnoremap("<leader>dff", [[0vwh"_d]])
 nnoremap("<leader>dfu", [[0vwh"_di<bs><esc>li]])
 nnoremap("<leader>dfd", [[f vc<CR><esc>]])
+nnoremap("<leader>ie", insert_error)
 
 -- see: https://stackoverflow.com/a/73354675/2887989
 nnoremap("<leader>y", [["+y]])
