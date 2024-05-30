@@ -46,7 +46,7 @@ local function insert_error()
     if current_file_type == "python" then
         vim.api.nvim_feedkeys(
             vim.api.nvim_eval(
-                '"otry:\\<CR>\\<BS>except e:\\<CR>pass\\<Esc>kO\\<Esc>"'
+                '"otry:\\<CR>\\<BS>except Exception as e:\\<CR>pass\\<Esc>kO\\<Esc>"'
             ), "m", true
         )
         return
