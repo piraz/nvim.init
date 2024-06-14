@@ -65,6 +65,8 @@ nnoremap("<leader>dff", [[0vwh"_d]])
 nnoremap("<leader>dfu", [[0vwh"_di<bs><esc>li]])
 nnoremap("<leader>dfd", [[f vc<CR><esc>]])
 nnoremap("<leader>ie", insert_error)
+nnoremap("<leader>ff", ":% !fold -s")
+nnoremap("<leader>fj", ":% !jq")
 
 -- see: https://stackoverflow.com/a/73354675/2887989
 nnoremap("<leader>y", [["+y]])
