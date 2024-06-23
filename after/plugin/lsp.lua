@@ -50,6 +50,18 @@ if loaded then
 
     cmp_mappings["<Tab>"] = nil
     cmp_mappings["<S-Tab>"] = nil
+    lsp.defaults.cmp_snippet = {
+        expand = function(args)
+            require("luasnip").lsp_expand(args.body)
+        end
+    }
+
+    lsp.defaults.cmp_sources({
+        { name = "nvim_lsp"},
+        { name = "luasnip"},
+    },{
+        { name = "buffer"},
+    })
 
     -- kind of based on https://jdhao.github.io/2021/08/12/nvim_sumneko_lua_conf/
     -- but on the diagnostics we need use also and the workspace.library is not
