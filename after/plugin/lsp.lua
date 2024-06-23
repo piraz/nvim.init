@@ -66,40 +66,24 @@ if loaded then
     -- kind of based on https://jdhao.github.io/2021/08/12/nvim_sumneko_lua_conf/
     -- but on the diagnostics we need use also and the workspace.library is not
     -- needed
-    -- lsp.configure("lua_ls",{
-    --     settings = {
-    --         Lua = {
-    --             -- runtime = {
-    --             --     -- Tell the language server which version of Lua you're using
-    --             --     -- (most likely LuaJIT in the case of Neovim)
-    --             --     version = "LuaJIT",
-    --             -- },
-    --             diagnostics = {
-    --                 -- Get the language server to recognize the `vim` global
-    --                 globals = {"vim", "use" },
-    --             },
-    --             -- workspace = {
-    --             --     -- Make the server aware of Neovim runtime files
-    --             --     library = vim.api.nvim_get_runtime_file("", true),
-    --             --
-    --             --     workspace = {
-    --             --         checkThirdParty = false,
-    --             --     },
-    --             -- },
-    --             -- Do not send telemetry data containing a randomized but unique
-    --             -- identifier
-    --             telemetry = {
-    --                 enable = false,
-    --             },
-    --         },
-    --         -- root_dir = lspconfig_util.root_pattern(
-    --         -- ".luarc.json", ".luarc.jsonc", ".luacheckrc",
-    --         -- ".stylua.toml", "stylua.toml", "selene.toml",
-    --         -- "selene.yml", ".git"
-    --         -- )
-    --     }
-    -- })
-    lsp.nvim_workspace()
+    lsp.configure("lua_ls",{
+        settings = {
+            Lua = {
+                runtime = { version = "Lua 5.1" },
+                -- diagnostics = {
+                --     -- Get the language server to recognize the `vim` global
+                --     -- globals = { "bit", "vim", "it", "use", "describe",
+                --     --     "after_each", "before_each" },
+                -- },
+                workspace = {
+                    library = {
+                        "${3rd}/busted/library",
+                        "${3rd}/luassert/library",
+                    },
+                },
+            },
+        }
+    })
 
     lsp.configure("intelephense", {
         settings = {
