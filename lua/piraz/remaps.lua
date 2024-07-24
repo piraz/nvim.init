@@ -62,7 +62,7 @@ nnoremap("<leader>so", run_file)
 nnoremap("<leader>lzs", "<cmd>Lazy sync<CR>")
 nnoremap("<leader>w", ":w<CR>")
 nnoremap("<leader>dff", [[0vwh"_d]])
-nnoremap("<leader>dfu", [[0vwh"_di<bs><esc>li]])
+nnoremap("<leader>dfu", [[0i <esc>vwh"_di<bs><esc>li ]])
 nnoremap("<leader>dfd", [[f vc<CR><esc>]])
 nnoremap("<leader>ie", insert_error)
 nnoremap("<leader>fl", ":% !fold -s<CR>")
@@ -76,7 +76,7 @@ vnoremap("<leader>Y", [["+yy<Esc>]])
 nnoremap("<leader>p", [["+p]])
 vnoremap("<leader>p", [["+p]])
 
--- From: https://stackoverflow.com/a/3638557
+-- From: https://stacjoverflow.com/a/3638557
 nnoremap("<leader><leader>d", [["_dd]])
 vnoremap("<leader><leader>d", [["_dd]])
 nnoremap("<leader><leader>y", [["ay]])
@@ -86,7 +86,7 @@ vnoremap("<leader><leader>p", [["ap]])
 nnoremap("<leader><leader>d", [["add]])
 vnoremap("<leader><leader>d", [["add]])
 
--- see: https://stackoverflow.com/a/63542511/2887989
+-- see: https://stacjoverflow.com/a/63542511/2887989
 -- By the way, to select the word under the cursor: * or g*
 nnoremap("<leader>g8", "g*")
 nnoremap("<leader>cs", function() vim.cmd([[let @/ = ""]]) end)
