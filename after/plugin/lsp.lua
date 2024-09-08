@@ -85,18 +85,28 @@ if loaded then
         }
     })
 
+    local intelephense_includes_file = vim.fs.joinpath(
+        vim.fn.expand("~"),
+        ".intelephense_extra_includes"
+    )
+    local include_paths = {
+        ".",
+        vim.fn.getcwd(),
+        "/usr/share/pear",
+        "/usr/share/php",
+    }
+    if vim.fn.filereadable(intelephense_includes_file) == 1 then
+        local lines = vim.fn.readfile(intelephense_includes_file)
+        for _, line in ipairs(lines) do
+            include_paths[#include_paths+1] = line
+        end
+    end
     lsp.configure("intelephense", {
         settings = {
             intelephense = {
                 environment = {
                     documentRoot = vim.fn.getcwd(),
-                    includePaths = {
-                        ".",
-                        vim.fn.getcwd(),
-                        "/usr/share/pear",
-                        "/usr/share/php",
-                        -- TODO:: add config based includePaths here
-                    },
+                    includePaths = include_paths,
                 },
                 files = {
                     associations = {
