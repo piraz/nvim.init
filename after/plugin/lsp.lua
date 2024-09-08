@@ -36,7 +36,7 @@ if loaded then
         "ltex",
         "ruff_lsp",
         "yamlls",
-        "tsserver",
+        "ts_ls",
     })
 
     local cmp = require("cmp")
