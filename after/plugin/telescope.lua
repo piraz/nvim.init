@@ -27,4 +27,6 @@ vim.keymap.set("n", "<leader>fk", builtin.keymaps, {})
 vim.keymap.set("n", "<leader>fq", builtin.quickfix, {})
 vim.keymap.set("n", "<leader>fs", builtin.grep_string, {})
 
+vim.keymap.set("n", "<leader>gb", builtin.git_bcommits, {})
+vim.keymap.set("n", "<leader>gh", builtin.git_commits, {})
 vim.keymap.set("n", "<leader>gs", builtin.git_status, {})
