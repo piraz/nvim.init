@@ -53,6 +53,9 @@ local function insert_error()
     end
 end
 
+nnoremap("[g", vim.diagnostic.goto_prev)
+nnoremap("]g", vim.diagnostic.goto_next)
+
 vim.g.mapleader = " "
 -- nnoremap("<leader>bls", "<cmd>ls<CR><cmd>b ")
 nnoremap("<leader>bd", ":bd<CR>")
