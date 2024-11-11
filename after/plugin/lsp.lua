@@ -34,7 +34,7 @@ if loaded then
         "pylsp",
         "lua_ls",
         "ltex",
-        "ruff_lsp",
+        "ruff",
         "yamlls",
         "ts_ls",
     })
@@ -152,7 +152,7 @@ if loaded then
     -- log.debug(lspconfig_util.root_pattern("setup.py")() or vim.cmd("pwd"))
 
     -- see :h lspconfig-root-detection
-    lsp.configure("ruff_lsp", {
+    lsp.configure("ruff", {
         settings = {
         },
         root_dir = function() return vim.fn.getcwd() end,
