@@ -50,6 +50,7 @@ local plugins = {
     -- Lsp plugins
     { "VonHeikemen/lsp-zero.nvim", branch = "v2.x" },
     { "neovim/nvim-lspconfig" },
+    { "theHamsta/nvim-dap-virtual-text" },
     -- Mason plugins
     { "williamboman/mason.nvim" },           -- Optional
     { "williamboman/mason-lspconfig.nvim" }, -- Optional

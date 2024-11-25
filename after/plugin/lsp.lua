@@ -265,6 +265,8 @@ if loaded then
     mason_lspconfig.setup ({
         "ruff", "sumneko_lua"
     }) ]]
+
+    require("nvim-dap-virtual-text").setup()
 else
     if log then
         log.debug("lsp-zero not found")
