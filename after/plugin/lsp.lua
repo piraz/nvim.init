@@ -26,7 +26,7 @@ if loaded then
 
     lsp.ensure_installed({
         "bashls", -- shell check should be installed manually
-        "buf_ls",
+        "bufls",
         "gopls",
         "intelephense",
         "jsonls",
