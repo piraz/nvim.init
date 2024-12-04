@@ -4,8 +4,17 @@ local log = Dev.log
 
 local loaded, dap = pcall(require, "dap")
 if loaded then
+    -- neodev is going AOL
+    -- SEE: https://github.com/nvim-neotest/neotest/issues/417#issue-2334008121
+    local neodev = require("neodev")
     local dapgo = require("dap-go")
     local dapui = require("dapui")
+
+    -- See: https://github.com/folke/neodev.nvim
+    -- Als: https://github.com/rcarriga/nvim-dap-ui
+    neodev.setup({
+        library = { plugins = { "nvim-dap-ui", types = true } }
+    })
 
     -- From https://youtu.be/0moS8UHupGc?t=625
     vim.keymap.set("n", "<F5>", function() dap.continue() end, {})
@@ -67,6 +76,8 @@ if loaded then
     dap.listeners.before.event_exited["dapui_config"] = function()
       dapui.close()
     end
+
+    require("nvim-dap-virtual-text").setup()
 else
     if log then
         log.debug("dap not found")
