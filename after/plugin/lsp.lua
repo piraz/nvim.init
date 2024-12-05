@@ -1,10 +1,6 @@
 local Dev = require("piraz.dev")
 local log = Dev.log
 
--- Reserve a space in the gutter
--- This will avoid an annoying layout shift in the screen
-vim.opt.signcolumn = "yes"
-
 local loaded, lspconfig = pcall(require, "lspconfig")
 
 if loaded then
