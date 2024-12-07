@@ -62,7 +62,6 @@ local plugins = {
     -- Snippets
     {
         "L3MON4D3/LuaSnip",
-        branch="v2.*",
         build="make install_jsregexp"
     }, -- Required
     { "rafamadriz/friendly-snippets" },
