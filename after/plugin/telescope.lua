@@ -1,19 +1,13 @@
 local dev = require("piraz.dev")
 local log = dev.log
 
-local loaded, telescope = pcall(require, "telescope")
+local loaded, _ = pcall(require, "telescope")
 if not loaded then
     if log then
         log.debug("telescope not found")
     end
     return
 end
-
-telescope.setup {
-    defaults = {
-        initial_mode = "normal"
-    }
-}
 
 local builtin = require("telescope.builtin")
 
