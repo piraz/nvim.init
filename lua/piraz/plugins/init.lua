@@ -10,7 +10,6 @@ return {
         },
         lazy = false,
     },
-    { "nvim-lualine/lualine.nvim" },
     { "mbbill/undotree" },
     {
         "folke/todo-comments.nvim",
