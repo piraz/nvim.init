@@ -17,6 +17,7 @@ return {
             vim.keymap.set("n", "<leader>fh", builtin.help_tags, {})
             vim.keymap.set("n", "<leader>fk", builtin.keymaps, {})
             vim.keymap.set("n", "<leader>fq", builtin.quickfix, {})
+            vim.keymap.set("n", "<leader>gr", builtin.lsp_references, {})
             vim.keymap.set("n", "<leader>fs", builtin.grep_string, {})
 
             vim.keymap.set("n", "<leader>gb", builtin.git_bcommits, {})
