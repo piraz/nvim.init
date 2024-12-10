@@ -12,10 +12,6 @@ return {
         lazy = false,
     },
     { "nvim-lualine/lualine.nvim" },
-    {
-        "theprimeagen/harpoon",  branch = "harpoon2",
-        dependencies = { "nvim-lua/plenary.nvim" }
-    },
     { "mbbill/undotree" },
     {
         "folke/todo-comments.nvim",
