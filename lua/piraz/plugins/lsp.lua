@@ -213,11 +213,15 @@ return {
             })
 
             cmp.setup({
+                completion = {
+                    completeopt = "menu,menuone,preview,noselect",
+                },
                 sources = cmp.config.sources({
                     { name = "nvim_lsp"},
                     { name = "luasnip"},
                 },{
                     { name = "buffer"},
+                    { name = "path"},
                 }),
                 snippet = {
                     expand = function(args)
