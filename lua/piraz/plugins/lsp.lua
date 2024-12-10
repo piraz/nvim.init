@@ -193,12 +193,6 @@ return {
             { "hrsh7th/cmp-path" },         -- Optional
             { "saadparwaiz1/cmp_luasnip" }, -- Optional
             { "hrsh7th/cmp-nvim-lua" },     -- Optional
-            -- Snippets
-            {
-                "L3MON4D3/LuaSnip",
-                build="make install_jsregexp"
-            }, -- Required
-            { "rafamadriz/friendly-snippets" },
         },
         config = function ()
             local cmp = require("cmp")
@@ -237,4 +231,10 @@ return {
             })
         end
     },
+    -- Snippets
+    {
+        "L3MON4D3/LuaSnip",
+        build="make install_jsregexp",
+    }, -- Required
+    { "rafamadriz/friendly-snippets" },
 }
