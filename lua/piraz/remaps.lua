@@ -1,5 +1,3 @@
-local Dev = require("piraz.dev")
-local log = Dev.log
 local keymap = require("piraz.keymap")
 
 local nnoremap = keymap.nnoremap
@@ -18,7 +16,6 @@ end
 
 local function run_file()
     local current_file_type = vim.api.nvim_buf_get_option(0, "filetype")
-    local file_name = vim.api.nvim_buf_get_name(0)
     if current_file_type == "go" then
         if is_go_test(0) then
             vim.cmd("GoTestFile")
