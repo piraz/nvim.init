@@ -1,5 +1,4 @@
 return {
-    { "lukas-reineke/indent-blankline.nvim" },
     {
         "kylechui/nvim-surround",
         version = "*",
