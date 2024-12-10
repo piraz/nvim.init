@@ -1,9 +1,5 @@
 return {
     {
-        "kylechui/nvim-surround",
-        version = "*",
-    },
-    {
         "numToStr/Comment.nvim",
         opts = {
             -- add any options here
