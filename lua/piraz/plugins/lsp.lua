@@ -41,6 +41,108 @@ return {
                 require("cmp_nvim_lsp").default_capabilities()
             )
 
+            vim.api.nvim_create_autocmd("VimEnter", {
+                callback = function ()
+                    local lspconfig = require("lspconfig")
+                    -- kind of based on https://jdhao.github.io/2021/08/12/nvim_sumneko_lua_conf/
+                    -- but on the diagnostics we need use also and the workspace.library is not
+                    -- needed
+                    lspconfig.lua_ls.setup {
+                        settings = {
+                            Lua = {
+                                runtime = { version = "Lua 5.1" },
+                                -- diagnostics = {
+                                    --     -- Get the language server to recognize the `vim` global
+                                    --     -- globals = { "bit", "vim", "it", "use", "describe",
+                                    --     --     "after_each", "before_each" },
+                                    -- },
+                                    workspace = {
+                                        library = {
+                                            "${3rd}/busted/library",
+                                            "${3rd}/luassert/library",
+                                    },
+                                },
+                            },
+                        }
+                    }
+
+                    local intelephense_includes_file = vim.fs.joinpath(
+                        vim.fn.expand("~"),
+                        ".intelephense_extra_includes"
+                    )
+                    local include_paths = {
+                        ".",
+                        vim.fn.getcwd(),
+                        "/usr/share/pear",
+                        "/usr/share/php",
+                    }
+                    if vim.fn.filereadable(intelephense_includes_file) == 1 then
+                        local lines = vim.fn.readfile(intelephense_includes_file)
+                        for _, line in ipairs(lines) do
+                            include_paths[#include_paths+1] = line
+                        end
+                    end
+                    lspconfig.intelephense.setup {
+                        settings = {
+                            intelephense = {
+                                environment = {
+                                    documentRoot = vim.fn.getcwd(),
+                                    includePaths = include_paths,
+                                },
+                                files = {
+                                    associations = {
+                                        "*.php",
+                                        "*.phtml",
+                                        "*.inc", -- <=== BOOOOOiiii that was distrubing....
+                                    }
+                                },
+                                -- maxMemory = 4000,
+                                -- trace = {
+                                    --     server = "verbose",
+                                    -- },
+                            },
+                        },
+                    }
+
+                    lspconfig.yamlls.setup {
+                        settings = {
+                            yaml = {
+                                keyOrdering = false,
+                            },
+                        },
+                    }
+
+                    lspconfig.gopls.setup {
+                        settings = {
+                            gopls = {
+                                env = {
+                                    GOFLAGS = "-tags=integration,end2end,live,unit",
+                                },
+                            },
+                        },
+                    }
+
+                    -- From https://stackoverflow.com/a/68998531/2887989
+                    -- vim.api.nvim_set_current_dir(vim.fn.getcwd())
+                    -- local project_dir = Dev.get_path(vim.fn.expand("%:p"))
+                    -- log.debug(Dev.get_path(vim.fn.expand("%:p")))
+
+                    -- log.debug(lspconfig_util.root_pattern("setup.py")() or vim.cmd("pwd"))
+
+                    -- see :h lspconfig-root-detection
+                    lspconfig.ruff.setup {
+                        settings = {
+                        },
+                        root_dir = function() return vim.fn.getcwd() end,
+                    }
+
+                    lspconfig.pylsp.setup {
+                        settings = {
+                        },
+                        root_dir = function() return vim.fn.getcwd() end,
+                    }
+                end,
+            })
         end
     },
     -- Mason plugins
@@ -124,104 +226,6 @@ return {
                 },
                 mapping = cmp_mapping,
             })
-            local lspconfig = require("lspconfig")
-            -- kind of based on https://jdhao.github.io/2021/08/12/nvim_sumneko_lua_conf/
-            -- but on the diagnostics we need use also and the workspace.library is not
-            -- needed
-            lspconfig.lua_ls.setup {
-                settings = {
-                    Lua = {
-                        runtime = { version = "Lua 5.1" },
-                        -- diagnostics = {
-                            --     -- Get the language server to recognize the `vim` global
-                            --     -- globals = { "bit", "vim", "it", "use", "describe",
-                            --     --     "after_each", "before_each" },
-                            -- },
-                            workspace = {
-                                library = {
-                                    "${3rd}/busted/library",
-                                    "${3rd}/luassert/library",
-                            },
-                        },
-                    },
-                }
-            }
-
-            local intelephense_includes_file = vim.fs.joinpath(
-                vim.fn.expand("~"),
-                ".intelephense_extra_includes"
-            )
-            local include_paths = {
-                ".",
-                vim.fn.getcwd(),
-                "/usr/share/pear",
-                "/usr/share/php",
-            }
-            if vim.fn.filereadable(intelephense_includes_file) == 1 then
-                local lines = vim.fn.readfile(intelephense_includes_file)
-                for _, line in ipairs(lines) do
-                    include_paths[#include_paths+1] = line
-                end
-            end
-            lspconfig.intelephense.setup {
-                settings = {
-                    intelephense = {
-                        environment = {
-                            documentRoot = vim.fn.getcwd(),
-                            includePaths = include_paths,
-                        },
-                        files = {
-                            associations = {
-                                "*.php",
-                                "*.phtml",
-                                "*.inc", -- <=== BOOOOOiiii that was distrubing....
-                            }
-                        },
-                        -- maxMemory = 4000,
-                        -- trace = {
-                            --     server = "verbose",
-                            -- },
-                    },
-                },
-            }
-
-            lspconfig.yamlls.setup {
-                settings = {
-                    yaml = {
-                        keyOrdering = false,
-                    },
-                },
-            }
-
-            lspconfig.gopls.setup {
-                settings = {
-                    gopls = {
-                        env = {
-                            GOFLAGS = "-tags=integration,end2end,live,unit",
-                        },
-                    },
-                },
-            }
-
-            -- From https://stackoverflow.com/a/68998531/2887989
-            -- vim.api.nvim_set_current_dir(vim.fn.getcwd())
-            -- local project_dir = Dev.get_path(vim.fn.expand("%:p"))
-            -- log.debug(Dev.get_path(vim.fn.expand("%:p")))
-
-            -- log.debug(lspconfig_util.root_pattern("setup.py")() or vim.cmd("pwd"))
-
-            -- see :h lspconfig-root-detection
-            lspconfig.ruff.setup {
-                settings = {
-                },
-                root_dir = function() return vim.fn.getcwd() end,
-            }
-
-            lspconfig.pylsp.setup {
-                settings = {
-                },
-                root_dir = function() return vim.fn.getcwd() end,
-            }
 
             vim.diagnostic.config({
                 virtual_text = false,
