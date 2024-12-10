@@ -11,6 +11,10 @@ if Dev.path_exists(chase_source) then
     chase = { "candango/chase.nvim", dev = true, name = "chase" }
 end
 
+chase["config"] = function()
+    require("chase").setup()
+end
+
 return {
     chase
 }
