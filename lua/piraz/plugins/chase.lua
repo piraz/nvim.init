@@ -6,13 +6,9 @@ local chase_source = table.concat({
     Dev.USER_HOME, "source", "candango", "chase"
 }, Dev.sep)
 
-local chase = { "candango/chase.nvim" }
+local chase = { "candango/chase.nvim", opts={} }
 if Dev.path_exists(chase_source) then
-    chase = { "candango/chase.nvim", dev = true, name = "chase" }
-end
-
-chase["config"] = function()
-    require("chase").setup()
+    chase = { "candango/chase.nvim", dev = true, name = "chase", opts={} }
 end
 
 return {
