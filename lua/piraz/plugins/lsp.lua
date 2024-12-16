@@ -13,7 +13,6 @@ return {
                     -- vim.keymap.set("n", "<F4>", "<Cmd>lua vim.lsp.buf.code_action()<CR>", opts)
                     vim.keymap.set("n", "<leader>vca", "<Cmd>lua vim.lsp.buf.code_action()<CR>", opts)
                     vim.keymap.set("n", "<leader>vdc", "<Cmd>lua vim.lsp.buf.declaration()<CR>", opts)
-                    vim.keymap.set("n", "<leader>vdf", "<Cmd>lua vim.lsp.buf.definition()<CR>", opts)
                     -- vim.keymap.set("n", "gr", "<Cmd>lua vim.lsp.buf.references()<CR>", opts)
                     -- vim.keymap.del("n", "gr", opts)
                     vim.keymap.set("n", "<leader>vrf", "<Cmd>lua vim.lsp.buf.references()<CR>", opts)
