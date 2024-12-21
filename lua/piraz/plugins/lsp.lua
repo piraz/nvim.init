@@ -160,7 +160,7 @@ return {
             require("mason-lspconfig").setup({
                 ensure_installed = {
                     "bashls", -- shell check should be installed manually
-                    "bufls",
+                    "buf_ls",
                     "gopls",
                     "intelephense",
                     "jsonls",
