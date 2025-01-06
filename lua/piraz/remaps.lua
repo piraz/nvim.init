@@ -14,6 +14,15 @@ local function is_go_test(buf_number)
     return false
 end
 
+local function is_lua_test()
+    local fname = vim.fn.expand("%:p")
+    local pattern = "_spec%.lua$"
+    if string.match(fname, pattern) then
+        return true
+    end
+    return false
+end
+
 local function run_file()
     local current_file_type = vim.api.nvim_buf_get_option(0, "filetype")
     if current_file_type == "go" then
@@ -25,6 +34,10 @@ local function run_file()
         return
     end
     if current_file_type == "lua" then
+        if is_lua_test() then
+            vim.cmd("PlenaryBustedFile " .. vim.api.nvim_buf_get_name(0))
+            return
+        end
         vim.cmd("so %")
         return
     end
