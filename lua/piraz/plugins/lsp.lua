@@ -140,6 +140,12 @@ return {
                         },
                         root_dir = function() return vim.fn.getcwd() end,
                     }
+
+                    lspconfig.ts_ls.setup {
+                        settings = {
+                        },
+                        root_dir = function() return vim.fn.getcwd() end,
+                    }
                 end,
             })
         end
