@@ -47,3 +47,5 @@ vim.opt.splitright = true
 
 vim.g.mapleader = " "
 
+-- SEE: https://stackoverflow.com/a/34533448
+vim.g.netrw_banner=0
