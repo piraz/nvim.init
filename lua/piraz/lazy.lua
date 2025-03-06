@@ -26,7 +26,7 @@ require("lazy").setup({
     spec = {
         { import = "piraz/plugins" },
     },
-    checker = { enabled = true },
+    change_detection = { notify = false },
     dev = {
         path = "~/source/candango",
     },
