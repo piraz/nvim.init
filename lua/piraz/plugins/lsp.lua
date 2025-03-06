@@ -49,6 +49,9 @@ return {
             vim.api.nvim_create_autocmd("VimEnter", {
                 callback = function ()
                     local lspconfig = require("lspconfig")
+
+                    lspconfig.clangd.setup {}
+
                     -- kind of based on https://jdhao.github.io/2021/08/12/nvim_sumneko_lua_conf/
                     -- but on the diagnostics we need use also and the workspace.library is not
                     -- needed
@@ -175,6 +178,7 @@ return {
                 ensure_installed = {
                     "bashls", -- shell check should be installed manually
                     "buf_ls",
+                    "clangd",
                     "gopls",
                     "intelephense",
                     "jsonls",
