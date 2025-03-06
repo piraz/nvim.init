@@ -1,5 +1,11 @@
 return {
     -- Lsp plugins
+    -- {
+    --     "nvim-java/nvim-java",
+    --     config = function()
+    --         require("java").setup()
+    --     end,
+    -- },
     {
         "neovim/nvim-lspconfig",
         config = function ()
@@ -135,6 +141,8 @@ return {
                         root_dir = function() return vim.fn.getcwd() end,
                     }
 
+                    lspconfig.rust_analyzer.setup {}
+
                     lspconfig.pylsp.setup {
                         settings = {
                         },
@@ -176,6 +184,7 @@ return {
                     "lua_ls",
                     "ltex",
                     "ruff",
+                    "rust_analyzer",
                     "yamlls",
                     "ts_ls",
                 },
