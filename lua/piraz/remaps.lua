@@ -71,6 +71,7 @@ vim.g.mapleader = " "
 nnoremap("<leader>bd", ":bd<CR>")
 nnoremap("<leader>ee", "<cmd>Ex<CR>")
 nnoremap("<leader>ls", "<cmd>ls<CR>")
+nnoremap("<leader>ln" , function() vim.opt.relativenumber = not vim.opt.relativenumber:get() end)
 nnoremap("<leader>so", run_file)
 nnoremap("<leader>mzu", "<cmd>MasonUpdate<CR>")
 nnoremap("<leader>lzs", "<cmd>Lazy sync<CR>")
