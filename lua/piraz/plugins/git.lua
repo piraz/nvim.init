@@ -3,10 +3,11 @@ return {
     {
         "tpope/vim-fugitive",
         config = function ()
-            vim.keymap.set("n", "<leader>gg", vim.cmd.Git)
-            vim.keymap.set("n", "<leader>gc", "<cmd>G commit<CR>")
-            vim.keymap.set("n", "<leader>gpl", "<cmd>G push<CR>")
-            vim.keymap.set("n", "<leader>gps", "<cmd>G push<CR>")
+            vim.keymap.set("n", "<leader>gg", vim.cmd.Git, {desc = "Run Git command from fugitive"})
+            vim.keymap.set("n", "<leader>gc", "<cmd>G commit<CR>", {desc = "Run Git commit from fugitive"})
+            vim.keymap.set("n", "<leader>gl", "<cmd>G log<CR>", {desc = "Run Git log from fugitive"})
+            vim.keymap.set("n", "<leader>gpl", "<cmd>G pull<CR>", {desc = "Run Git pull from fugitive"})
+            vim.keymap.set("n", "<leader>gps", "<cmd>G push<CR>", {desc = "Run Git push from fugitive"})
         end
     },
     {
