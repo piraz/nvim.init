@@ -64,7 +64,7 @@ return {
                 row = 0,
                 col = 1
             },
-            on_attach = function (_) -- if needed use bufnr
+            on_attach = function (bufnr) -- if needed use bufnr
                 -- vim.keymap.set("n", "<leader>gd", function() vim.cmd("GitGutterDisable") end)
                 -- vim.keymap.set("n", "<leader>ge", function() vim.cmd("GitGutterEnable") end)
                 -- vim.keymap.set("n", "<leader>gf", "<Plug>(GitGutterFold)")
@@ -83,6 +83,9 @@ return {
                 vim.keymap.set("n", "<leader>gtn", "<cmd>Gitsigns toggle_numhl<CR>")
                 vim.keymap.set("n", "<leader>gts", "<cmd>Gitsigns toggle_signs<CR>")
                 vim.keymap.set("n", "<leader>gtw", "<cmd>Gitsigns toggle_word_diff<CR>")
+                -- FIXES: Gitsigns attaches to netrw buffers (inconsistent)
+                -- See: https://github.com/lewis6991/gitsigns.nvim/issues/1318#issuecomment-2878738359
+                if vim.bo[bufnr].filetype == "netrw" then return false end
             end
         }
     },
