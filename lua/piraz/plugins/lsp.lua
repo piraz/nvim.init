@@ -163,18 +163,21 @@ return {
     },
     -- Mason plugins
     {
-        "williamboman/mason.nvim",
-        dependencies = {
-             { "williamboman/mason-lspconfig.nvim" },
-        },
+        "mason-org/mason.nvim",
+        config = function ()
+            require("mason").setup()
+        end
+    },
+    {
+        "mason-org/mason-lspconfig.nvim",
         config = function ()
             -- Servers are located at:
             --
             -- ~/.local/share/nvim/site/pack/packer/start/mason-lspconfig.nvim/lua/
             -- mason-lspconfig/mappings/server.lua
             -- local lua_lsp = "lua_ls"
-            require("mason").setup({})
             require("mason-lspconfig").setup({
+                automatic_enable = false,
                 ensure_installed = {
                     "bashls", -- shell check should be installed manually
                     "buf_ls",
@@ -191,14 +194,7 @@ return {
                     "rust_analyzer",
                     "yamlls",
                     "ts_ls",
-                },
-                handers = {
-                    -- this first function is the "default handler"
-                    -- it applies to every language server without a "custom handler"
-                    function(server_name)
-                        require('lspconfig')[server_name].setup({})
-                    end,
-                },
+                }
             })
         end
     },
