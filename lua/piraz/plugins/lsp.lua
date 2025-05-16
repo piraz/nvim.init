@@ -13,7 +13,7 @@ return {
                 callback = function(event)
                     local opts = { buffer = event.buf }
                     -- Buffer actions
-                    vim.keymap.set("n", "<C-k>","<Cmd>lua vim.lsp.buf.signatre_help()<CR>", opts)
+                    vim.keymap.set("n", "<C-k>","<Cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
                     vim.keymap.set("n", "gd", "<Cmd>lua vim.lsp.buf.definition()<CR>", opts)
                     vim.keymap.set("n", "gi", "<Cmd>lua vim.lsp.buf.implementation()<CR>", opts)
                     -- vim.keymap.set("n", "<F4>", "<Cmd>lua vim.lsp.buf.code_action()<CR>", opts)
