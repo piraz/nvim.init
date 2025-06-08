@@ -244,10 +244,7 @@ return {
                 float = {
                     focusable = false,
                     style = "minimal",
-                    boder = "rounded",
                     source = true,
-                    header = "",
-                    prefix = "",
                 },
             })
         end
