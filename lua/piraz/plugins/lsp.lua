@@ -240,7 +240,15 @@ return {
             })
 
             vim.diagnostic.config({
-                severity_sort = true
+                severity_sort = true,
+                float = {
+                    focusable = false,
+                    style = "minimal",
+                    boder = "rounded",
+                    source = true,
+                    header = "",
+                    prefix = "",
+                },
             })
         end
     },
