@@ -1,8 +1,3 @@
-local keymap = require("piraz.keymap")
-
-local nnoremap = keymap.nnoremap
-local vnoremap = keymap.vnoremap
-
 local function is_go_test(buf_number)
     local lines = vim.api.nvim_buf_get_lines(buf_number, 0, -1, false)
     for _, line in ipairs(lines) do
@@ -63,49 +58,46 @@ local function insert_error()
     end
 end
 
-nnoremap("[g", vim.diagnostic.goto_prev)
-nnoremap("]g", vim.diagnostic.goto_next)
-
 vim.g.mapleader = " "
 -- nnoremap("<leader>bls", "<cmd>ls<CR><cmd>b ")
-nnoremap("<leader>bd", ":bd<CR>")
-nnoremap("<leader>ee", "<cmd>Ex<CR>")
-nnoremap("<leader>ls", "<cmd>ls<CR>")
-nnoremap("<leader>ln" , function() vim.opt.number = not vim.opt.number:get() end, {desc = "Toggle opt number"})
-nnoremap("<leader>lr" , function() vim.opt.relativenumber = not vim.opt.relativenumber:get() end, {desc = "Toggle opt relativenumber"})
-nnoremap("<leader>so", run_file)
-nnoremap("<leader>mzu", "<cmd>MasonUpdate<CR>", {desc = "Mason Update"})
-nnoremap("<leader>lzs", "<cmd>Lazy sync<CR>", {desc = "Lazy sync"})
-nnoremap("<leader>w", ":w<CR>")
-nnoremap("<leader>dff", [[0vwh"_d]])
-nnoremap("<leader>dfu", [[0i <esc>vwh"_di<bs><esc>li ]])
-nnoremap("<leader>dfd", [[f vc<CR><esc>]])
-nnoremap("<leader>ie", insert_error)
-nnoremap("<leader>fl", ":% !fold -s<CR>")
-nnoremap("<leader>fj", ":% !jq<CR>")
+vim.keymap.set("n", "<leader>bd", ":bd<CR>", { desc = "Delete current buffer" })
+vim.keymap.set("n", "<leader>cl" , function() vim.opt.cursorcolumn = not vim.opt.cursorcolumn:get() end, {desc = "Toggle opt cursorcolumn"})
+vim.keymap.set("n", "<leader>ee", "<cmd>Ex<CR>", { desc = "Open file explorer" })
+vim.keymap.set("n", "<leader>ls", "<cmd>ls<CR>", { desc = "List buffers" })
+vim.keymap.set("n", "<leader>ln" , function() vim.opt.number = not vim.opt.number:get() end, {desc = "Toggle opt number"})
+vim.keymap.set("n", "<leader>lr" , function() vim.opt.relativenumber = not vim.opt.relativenumber:get() end, {desc = "Toggle opt relativenumber"})
+vim.keymap.set("n", "<leader>so", run_file, {desc = "Run file"})
+vim.keymap.set("n", "<leader>mzu", "<cmd>MasonUpdate<CR>", { desc = "Mason Update" })
+vim.keymap.set("n", "<leader>lzs", "<cmd>Lazy sync<CR>", { desc = "Lazy sync" })
+vim.keymap.set("n", "<leader>w", ":w<CR>", { desc = "Save file" })
+vim.keymap.set("n", "<leader>dff", [[0vwh"_d]], { desc = "Delete current line without yanking" })
+vim.keymap.set("n", "<leader>dfu", [[0i <esc>vwh"_di<bs><esc>li ]], { desc = "Delete current line without yanking and insert space at the beginning" })
+vim.keymap.set("n", "<leader>dfd", [[f vc<CR><esc>]], { desc = "Delete current line without yanking and insert space at the beginning" })
+vim.keymap.set("n", "<leader>ie", insert_error, { desc = "Insert error handling code" })
+vim.keymap.set("n", "<leader>fl", ":% !fold -s<CR>", { desc = "Fold file" })
+vim.keymap.set("n", "<leader>fj", ":% !jq<CR>", { desc = "Format JSON file" })
 
 -- see: https://stackoverflow.com/a/73354675/2887989
-nnoremap("<leader>y", [["+y]])
-vnoremap("<leader>y", [["+y<Esc>]])
-nnoremap("<leader>Y", [["+yy]])
-vnoremap("<leader>Y", [["+yy<Esc>]])
-nnoremap("<leader>p", [["+p]])
-vnoremap("<leader>p", [["+p]])
+vim.keymap.set("n","<leader>y", [["+y]], { desc = "Yank to system clipboard" })
+vim.keymap.set("v","<leader>y", [["+y<Esc>]], { desc = "Yank to system clipboard" })
+vim.keymap.set("n","<leader>Y", [["+yy]], { desc = "Yank line to system clipboard" })
+vim.keymap.set("v","<leader>Y", [["+yy<Esc>]], { desc = "Yank line to system clipboard" })
+vim.keymap.set("n","<leader>p", [["+p]], { desc = "Paste from system clipboard" })
+vim.keymap.set("v","<leader>p", [["+p]], { desc = "Paste from system clipboard" })
 
 -- From: https://stacjoverflow.com/a/3638557
-nnoremap("<leader><leader>d", [["_dd]])
-vnoremap("<leader><leader>d", [["_dd]])
-nnoremap("<leader><leader>y", [["ay]])
-vnoremap("<leader><leader>y", [["ay]])
-nnoremap("<leader><leader>p", [["ap]])
-vnoremap("<leader><leader>p", [["ap]])
-nnoremap("<leader><leader>d", [["add]])
-vnoremap("<leader><leader>d", [["add]])
+vim.keymap.set("n","<leader><leader>d", [["_dd]], { desc = "Delete line without yanking" })
+vim.keymap.set("v","<leader><leader>d", [["_dd]], { desc = "Delete line without yanking" })
+vim.keymap.set("n","<leader><leader>y", [["ay]], { desc = "Yank to register 'a'" })
+vim.keymap.set("v","<leader><leader>y", [["ay]], { desc = "Yank to register 'a'" })
+vim.keymap.set("n","<leader><leader>p", [["ap]], { desc = "Paste from register 'a'" })
+vim.keymap.set("v","<leader><leader>p", [["ap]], { desc = "Paste from register 'a'" })
+vim.keymap.set("n","<leader><leader>d", [["add]], { desc = "Delete line without yanking to register 'a'" })
+vim.keymap.set("v","<leader><leader>d", [["add]], { desc = "Delete line without yanking to register 'a'" })
 
 -- see: https://stacjoverflow.com/a/63542511/2887989
 -- By the way, to select the word under the cursor: * or g*
-nnoremap("<leader>g8", "g*")
-nnoremap("<leader>cs", function() vim.cmd([[let @/ = ""]]) end)
+vim.keymap.set("n","<leader>g8", "g*")
+vim.keymap.set("n","<leader>cs", function() vim.cmd([[let @/ = ""]]) end)
 
 -- From: https://superuser.com/a/310424
--- TODO: See if this good: nnoremap()
