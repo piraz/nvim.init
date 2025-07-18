@@ -1,6 +1,5 @@
 local Dev = require("piraz.dev")
--- vim.opt.swapfile = false
--- vim.opt.backup = false
+
 vim.opt.guicursor = ""
 
 vim.opt.mouse = ""

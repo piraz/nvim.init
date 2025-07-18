@@ -11,29 +11,34 @@ return {
         config = function ()
             vim.api.nvim_create_autocmd("LspAttach", {
                 callback = function(event)
-                    local opts = { buffer = event.buf }
+                    -- Return a table with description and the event buffer
+                    local get_opts = function (desc)
+                        return {
+                            desc = desc,
+                            buffer = event.buf,
+                        }
+                    end
                     -- Buffer actions
-                    vim.keymap.set("n", "<C-k>","<Cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
-                    vim.keymap.set("n", "gd", "<Cmd>lua vim.lsp.buf.definition()<CR>", opts)
-                    vim.keymap.set("n", "gi", "<Cmd>lua vim.lsp.buf.implementation()<CR>", opts)
-                    -- vim.keymap.set("n", "<F4>", "<Cmd>lua vim.lsp.buf.code_action()<CR>", opts)
-                    vim.keymap.set("n", "<leader>vca", "<Cmd>lua vim.lsp.buf.code_action()<CR>", opts)
-                    vim.keymap.set("n", "<leader>vdc", "<Cmd>lua vim.lsp.buf.declaration()<CR>", opts)
-                    -- vim.keymap.set("n", "gr", "<Cmd>lua vim.lsp.buf.references()<CR>", opts)
+                    vim.keymap.set("n", "<C-k>",function () vim.lsp.buf.signature_help() end, get_opts("Signature help"))
+                    vim.keymap.set("n", "gd", function () vim.lsp.buf.definition() end, get_opts("Go to definition"))
+                    vim.keymap.set("n", "gi", function () vim.lsp.buf.implementation() end, get_opts("Go to implementation"))
+                    -- vim.keymap.set("n", "<F4>", function () vim.lsp.buf.code_action() end, opts)
+                    vim.keymap.set("n", "<leader>vca", function () vim.lsp.buf.code_action() end, get_opts("Code action"))
+                    vim.keymap.set("n", "<leader>vdc", function () vim.lsp.buf.declaration() end, get_opts("Go to declaration"))
+                    -- vim.keymap.set("n", "gr", function () vim.lsp.buf.references() end, opts)
                     -- vim.keymap.del("n", "gr", opts)
-                    vim.keymap.set("n", "<leader>vrf", "<Cmd>lua vim.lsp.buf.references()<CR>", opts)
-                    -- vim.keymap.set("n", "<F2>", "<Cmd>lua vim.lsp.buf.rename()<CR>", opts)
-                    vim.keymap.set("n", "<leader>vrn", "<Cmd>lua vim.lsp.buf.rename()<CR>", opts)
-                    vim.keymap.set("n", "K", "<Cmd>lua vim.lsp.buf.hover()<CR>", opts)
-                    vim.keymap.set("n", "<leader>vws", "<Cmd>lua vim.lsp.buf.workspace_symbol()<CR>", opts)
+                    vim.keymap.set("n", "<leader>vrf", function () vim.lsp.buf.references() end, get_opts("Find references"))
+                    vim.keymap.set("n", "<leader>vrn", function () vim.lsp.buf.rename() end, get_opts("Rename symbol"))
+                    vim.keymap.set("n", "K", function () vim.lsp.buf.hover() end, get_opts("Hover documentation"))
+                    vim.keymap.set("n", "<leader>vws", function () vim.lsp.buf.workspace_symbol() end, get_opts("Search workspace symbols"))
 
-                    vim.keymap.set("n", "<leader>vdo", "<Cmd>lua vim.diagnostic.open_float()<CR>", opts)
-                    vim.keymap.set("n", "[d", "<Cmd>lua vim.diagnostic.goto_next()<CR>", opts)
-                    vim.keymap.set("n", "]d", "<Cmd>lua vim.diagnostic.goto_prev()<CR>", opts)
-                    vim.keymap.set("n", "<leader>vdh", "<Cmd>lua vim.diagnostic.hide()<CR>", opts)
-                    vim.keymap.set("n", "<leader>vds", "<Cmd>lua vim.diagnostic.show()<CR>", opts)
-                    vim.keymap.set("n", "<leader>vth", "<Cmd>lua vim.diagnostic.config({virtual_text = false})<CR>", opts)
-                    vim.keymap.set("n", "<leader>vts", "<Cmd>lua vim.diagnostic.config({virtual_text = true})<CR>", opts)
+                    vim.keymap.set("n", "<leader>vdo", function () vim.diagnostic.open_float() end, get_opts("Open diagnostics in float window"))
+                    vim.keymap.set("n", "[d",function () vim.diagnostic.jump({ count = -1}) end, get_opts("Jump to previous diagnostic"))
+                    vim.keymap.set("n", "]d",function () vim.diagnostic.jump({ count = 1}) end, get_opts("Jump to next diagnostic"))
+                    vim.keymap.set("n", "<leader>vdh", function () vim.diagnostic.hide() end, get_opts("Hides diagnostics"))
+                    vim.keymap.set("n", "<leader>vds", function () vim.diagnostic.show() end, get_opts("Shows diagnostics"))
+                    vim.keymap.set("n", "<leader>vth", function () vim.diagnostic.config({virtual_text = false}) end, get_opts("Disable virtual text diagnostics"))
+                    vim.keymap.set("n", "<leader>vts", function () vim.diagnostic.config({virtual_text = true}) end, get_opts("Enable virtual text diagnostics"))
                 end
             })
 
@@ -225,11 +230,12 @@ return {
                     completeopt = "menu,menuone,preview,noselect",
                 },
                 sources = cmp.config.sources({
-                    { name = "nvim_lsp"},
-                    { name = "luasnip"},
+                    { name = "copilot", group_index = 2},
+                    { name = "nvim_lsp", group_index = 2},
+                    { name = "luasnip", group_index = 2},
                 },{
-                    { name = "buffer"},
-                    { name = "path"},
+                    { name = "buffer", group_index = 2},
+                    { name = "path", group_index = 2},
                 }),
                 snippet = {
                     expand = function(args)
@@ -254,6 +260,25 @@ return {
         "L3MON4D3/LuaSnip",
         version = "v2.*",
         build="make install_jsregexp",
-    }, -- Required
-    { "rafamadriz/friendly-snippets" },
+        config = function ()
+            local ls = require("luasnip")
+
+            vim.keymap.set("i", "<C-k>", function() ls.expand() end, {silent = true})
+            vim.keymap.set({"i", "s"}, "<C-l>", function() ls.jump( 1) end,
+            {silent = true})
+            vim.keymap.set({"i", "s"}, "<C-j>", function() ls.jump(-1) end,
+            { silent = true })
+
+            vim.keymap.set({"i", "s"}, "<C-e>", function()
+                if ls.choice_active() then
+                    ls.change_choice(1)
+                end
+            end, { desc = "Change choice in choice node", silent = true })
+            -- See: https://github.com/rafamadriz/friendly-snippets#with-lazynvim
+            require("luasnip.loaders.from_vscode").lazy_load()
+        end,
+        dependencies = {
+            "rafamadriz/friendly-snippets"
+        },
+    },
 }
