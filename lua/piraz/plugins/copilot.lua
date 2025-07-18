@@ -6,8 +6,6 @@ if vim.fn.has("mac") == 0 then
             event = "InsertEnter",
             config = function()
                 require("copilot").setup({
-                    suggestion = { enabled = false },
-                    panel = { enabled = false },
                     filetypes = {
                         gitcommit = true,
                         go = true,
@@ -16,22 +14,33 @@ if vim.fn.has("mac") == 0 then
                         html = true,
                         yaml = true,
                         xml = true,
+                        netrw = false,
                         ["requirements.txt"] = true,
                         ["package.json"] = true,
                         ["pyproject.toml"] = true,
                     },
+                    logger = {
+                        print_log_level = vim.log.levels.OFF,
+                    },
+                    panel = { enabled = false },
+                    suggestion = { enabled = false },
                 })
+                vim.cmd([[Copilot disable]])
+                vim.defer_fn( function ()
+                    print()
+                    vim.cmd([[Copilot enable]])
+                end, 100)
             end,
-        },
-        {
-            "AndreM222/copilot-lualine"
+            dependencies = {
+                "AndreM222/copilot-lualine",
+            },
         },
         {
             "zbirenbaum/copilot-cmp",
             config = function ()
                 require("copilot_cmp").setup()
             end
-        }
+        },
     }
 end
 return {}
