@@ -14,6 +14,8 @@ if vim.fn.has("mac") == 0 then
                         html = true,
                         yaml = true,
                         xml = true,
+                        javascript = true,
+                        typescript = true,
                         netrw = false,
                         ["requirements.txt"] = true,
                         ["package.json"] = true,
