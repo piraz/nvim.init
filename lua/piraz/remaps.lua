@@ -33,7 +33,7 @@ local function run_file()
             vim.cmd("PlenaryBustedFile " .. vim.api.nvim_buf_get_name(0))
             return
         end
-        vim.cmd("so %")
+        vim.cmd("luafile " .. vim.api.nvim_buf_get_name(0))
         return
     end
 end
@@ -66,7 +66,8 @@ vim.keymap.set("n", "<leader>ee", "<cmd>Ex<CR>", { desc = "Open file explorer" }
 vim.keymap.set("n", "<leader>ls", "<cmd>ls<CR>", { desc = "List buffers" })
 vim.keymap.set("n", "<leader>ln" , function() vim.opt.number = not vim.opt.number:get() end, {desc = "Toggle opt number"})
 vim.keymap.set("n", "<leader>lr" , function() vim.opt.relativenumber = not vim.opt.relativenumber:get() end, {desc = "Toggle opt relativenumber"})
-vim.keymap.set("n", "<leader>so", run_file, {desc = "Run file"})
+vim.keymap.set("n", "<leader>so", function() vim.cmd("luafile %") end, {desc = "Souce file"})
+vim.keymap.set("n", "<leader>x", run_file, {desc = "Run file"})
 vim.keymap.set("n", "<leader>mzu", "<cmd>MasonUpdate<CR>", { desc = "Mason Update" })
 vim.keymap.set("n", "<leader>lzs", "<cmd>Lazy sync<CR>", { desc = "Lazy sync" })
 vim.keymap.set("n", "<leader>w", ":w<CR>", { desc = "Save file" })
