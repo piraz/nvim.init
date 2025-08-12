@@ -78,6 +78,9 @@ vim.keymap.set("n", "<leader>ie", insert_error, { desc = "Insert error handling 
 vim.keymap.set("n", "<leader>fl", ":% !fold -s<CR>", { desc = "Fold file" })
 vim.keymap.set("n", "<leader>fj", ":% !jq<CR>", { desc = "Format JSON file" })
 
+-- Overwrite past command using blakchole register, to avoid yanking
+vim.keymap.set("x","p", [["_dP]], { noremap=true, silent=true,  desc = "Delete line without yanking" })
+
 -- see: https://stackoverflow.com/a/73354675/2887989
 vim.keymap.set("n","<leader>y", [["+y]], { desc = "Yank to system clipboard" })
 vim.keymap.set("v","<leader>y", [["+y<Esc>]], { desc = "Yank to system clipboard" })
