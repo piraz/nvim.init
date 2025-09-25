@@ -8,7 +8,38 @@ return {
     -- },
     {
         "neovim/nvim-lspconfig",
+        dependencies = {
+            { "mason-org/mason.nvim" },
+            { "mason-org/mason-lspconfig.nvim" },
+        },
         config = function ()
+            -- Servers are located at:
+            --
+            -- ~/.local/share/nvim/site/pack/packer/start/mason-lspconfig.nvim/lua/
+            -- mason-lspconfig/mappings/server.lua
+            -- local lua_lsp = "lua_ls"
+            require("mason").setup()
+            require("mason-lspconfig").setup({
+                automatic_enable = false,
+                ensure_installed = {
+                    "bashls", -- shell check should be installed manually
+                    "buf_ls",
+                    "clangd",
+                    "gopls",
+                    "intelephense",
+                    "jsonls",
+                    "lemminx",
+                    "prosemd_lsp", -- proselint should be installed manually
+                    "pylsp",
+                    "lua_ls",
+                    "ltex",
+                    "ruff",
+                    "rust_analyzer",
+                    "yamlls",
+                    "ts_ls",
+                }
+            })
+
             vim.api.nvim_create_autocmd("LspAttach", {
                 callback = function(event)
                     -- Return a table with description and the event buffer
@@ -42,42 +73,15 @@ return {
                 end
             })
 
-            -- Add cmp_nvim_lsp capabilities settings to lspconfig
-            -- This should be executed before you configure any language server
-            local lspconfig_defaults = require("lspconfig").util.default_config
-            lspconfig_defaults.capabilities = vim.tbl_deep_extend(
-                "force",
-                lspconfig_defaults.capabilities,
-                require("cmp_nvim_lsp").default_capabilities()
-            )
-
             vim.api.nvim_create_autocmd("VimEnter", {
                 callback = function ()
-                    local lspconfig = require("lspconfig")
-
-                    lspconfig.clangd.setup {}
-
-                    -- kind of based on https://jdhao.github.io/2021/08/12/nvim_sumneko_lua_conf/
-                    -- but on the diagnostics we need use also and the workspace.library is not
-                    -- needed
-                    lspconfig.lua_ls.setup {
-                        settings = {
-                            Lua = {
-                                runtime = { version = "Lua 5.1" },
-                                -- diagnostics = {
-                                    --     -- Get the language server to recognize the `vim` global
-                                    --     -- globals = { "bit", "vim", "it", "use", "describe",
-                                    --     --     "after_each", "before_each" },
-                                    -- },
-                                    workspace = {
-                                        library = {
-                                            "${3rd}/busted/library",
-                                            "${3rd}/luassert/library",
-                                    },
-                                },
-                            },
-                        }
-                    }
+                    -- local lspconfig = require("lspconfig")
+                    local capabilities = vim.tbl_deep_extend(
+                        "force",
+                        vim.lsp.protocol.make_client_capabilities(),
+                        require("cmp_nvim_lsp").default_capabilities()
+                    )
+                    local installed_servers = require("mason-lspconfig").get_installed_servers()
 
                     local intelephense_includes_file = vim.fs.joinpath(
                         vim.fn.expand("~"),
@@ -95,111 +99,91 @@ return {
                             include_paths[#include_paths+1] = line
                         end
                     end
-                    lspconfig.intelephense.setup {
-                        settings = {
-                            intelephense = {
-                                environment = {
-                                    documentRoot = vim.fn.getcwd(),
-                                    includePaths = include_paths,
+
+                    local custom_configs = {
+                        -- kind of based on https://jdhao.github.io/2021/08/12/nvim_sumneko_lua_conf/
+                        -- but on the diagnostics we need use also and the workspace.library is not
+                        -- needed
+                        lua_ls = {
+                            settings = {
+                                Lua = {
+                                    runtime = { version = "Lua 5.1" },
+                                    -- diagnostics = {
+                                    --     -- Get the language server to recognize the `vim` global
+                                    --     -- globals = { "bit", "vim", "it", "use", "describe",
+                                    --     --     "after_each", "before_each" },
+                                    -- },
+                                    workspace = {
+                                        library = {
+                                            "${3rd}/busted/library",
+                                            "${3rd}/luassert/library",
+                                        },
+                                    },
                                 },
-                                files = {
-                                    associations = {
-                                        "*.php",
-                                        "*.phtml",
-                                        "*.inc", -- <=== BOOOOOiiii that was distrubing....
-                                    }
-                                },
-                                -- maxMemory = 4000,
-                                -- trace = {
+                            }
+                        },
+                        intelephense ={
+                            settings = {
+                                intelephense = {
+                                    environment = {
+                                        documentRoot = vim.fn.getcwd(),
+                                        includePaths = include_paths,
+                                    },
+                                    files = {
+                                        associations = {
+                                            "*.php",
+                                            "*.phtml",
+                                            "*.inc", -- <=== BOOOOOiiii that was distrubing....
+                                        }
+                                    },
+                                    -- maxMemory = 4000,
+                                    -- trace = {
                                     --     server = "verbose",
                                     -- },
-                            },
-                        },
-                    }
-
-                    lspconfig.yamlls.setup {
-                        settings = {
-                            yaml = {
-                                keyOrdering = false,
-                            },
-                        },
-                    }
-
-                    lspconfig.gopls.setup {
-                        settings = {
-                            gopls = {
-                                env = {
-                                    GOFLAGS = "-tags=integration,end2end,live,unit",
                                 },
                             },
                         },
+                        yamlls = {
+                            settings = {
+                                yaml = {
+                                    keyOrdering = false,
+                                },
+                            },
+                        },
+                        gopls = {
+                            settings = {
+                                gopls = {
+                                    env = {
+                                        GOFLAGS = "-tags=integration,end2end,live,unit",
+                                    },
+                                },
+                            },
+                        },
+                        -- see :h lspconfig-root-detection
+                        ruff = {
+                            root_dir = function() return vim.fn.getcwd() end,
+                        },
+                        pylsp = {
+                            root_dir = function() return vim.fn.getcwd() end,
+                        },
+                        ts_ls = {
+                            root_dir = function() return vim.fn.getcwd() end,
+                        },
                     }
 
-                    -- From https://stackoverflow.com/a/68998531/2887989
+
+                    for _, server in ipairs(installed_servers) do
+                        local config = custom_configs[server] or {}
+                        config.capabilities = capabilities
+                        vim.lsp.config(server, config)
+                    end
+
+                    vim.lsp.enable(installed_servers)
                     -- vim.api.nvim_set_current_dir(vim.fn.getcwd())
                     -- local project_dir = Dev.get_path(vim.fn.expand("%:p"))
                     -- log.debug(Dev.get_path(vim.fn.expand("%:p")))
-
                     -- log.debug(lspconfig_util.root_pattern("setup.py")() or vim.cmd("pwd"))
-
-                    -- see :h lspconfig-root-detection
-                    lspconfig.ruff.setup {
-                        settings = {
-                        },
-                        root_dir = function() return vim.fn.getcwd() end,
-                    }
-
-                    lspconfig.rust_analyzer.setup {}
-
-                    lspconfig.pylsp.setup {
-                        settings = {
-                        },
-                        root_dir = function() return vim.fn.getcwd() end,
-                    }
-
-                    lspconfig.ts_ls.setup {
-                        settings = {
-                        },
-                        root_dir = function() return vim.fn.getcwd() end,
-                    }
                 end,
-            })
-        end
-    },
-    -- Mason plugins
-    {
-        "mason-org/mason.nvim",
-        config = function ()
-            require("mason").setup()
-        end
-    },
-    {
-        "mason-org/mason-lspconfig.nvim",
-        config = function ()
-            -- Servers are located at:
-            --
-            -- ~/.local/share/nvim/site/pack/packer/start/mason-lspconfig.nvim/lua/
-            -- mason-lspconfig/mappings/server.lua
-            -- local lua_lsp = "lua_ls"
-            require("mason-lspconfig").setup({
-                automatic_enable = false,
-                ensure_installed = {
-                    "bashls", -- shell check should be installed manually
-                    "buf_ls",
-                    "clangd",
-                    "gopls",
-                    "intelephense",
-                    "jsonls",
-                    "lemminx",
-                    "prosemd_lsp", -- proselint should be installed manually
-                    "pylsp",
-                    "lua_ls",
-                    "ltex",
-                    "ruff",
-                    "rust_analyzer",
-                    "yamlls",
-                    "ts_ls",
-                }
             })
         end
     },
@@ -230,9 +214,9 @@ return {
                     completeopt = "menu,menuone,preview,noselect",
                 },
                 sources = cmp.config.sources({
-                    { name = "copilot", group_index = 2},
                     { name = "nvim_lsp", group_index = 2},
                     { name = "luasnip", group_index = 2},
+                    { name = "copilot", group_index = 2},
                 },{
                     { name = "buffer", group_index = 2},
                     { name = "path", group_index = 2},
@@ -263,7 +247,7 @@ return {
         config = function ()
             local ls = require("luasnip")
 
-            vim.keymap.set("i", "<C-k>", function() ls.expand() end, {silent = true})
+            vim.keymap.set("i", "<C-k>", function() ls.expand({}) end, {silent = true})
             vim.keymap.set({"i", "s"}, "<C-l>", function() ls.jump( 1) end,
             {silent = true})
             vim.keymap.set({"i", "s"}, "<C-j>", function() ls.jump(-1) end,
