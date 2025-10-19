@@ -104,6 +104,27 @@ return {
                         -- kind of based on https://jdhao.github.io/2021/08/12/nvim_sumneko_lua_conf/
                         -- but on the diagnostics we need use also and the workspace.library is not
                         -- needed
+                        ltex = {
+                            settings = {
+                                ltex = {
+                                    enabled = {
+                                        "bibtex",
+                                        "gitcommit",
+                                        "markdown",
+                                        "org",
+                                        "tex",
+                                        "restructuredtext",
+                                        "rsweave",
+                                        "latex",
+                                        "quarto",
+                                        "rmd",
+                                        "context",
+                                        "mail",
+                                        "plaintext"
+                                    }
+                                }
+                            }
+                        },
                         lua_ls = {
                             settings = {
                                 Lua = {
