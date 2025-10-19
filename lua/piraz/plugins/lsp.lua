@@ -166,9 +166,6 @@ return {
                         pylsp = {
                             root_dir = function() return vim.fn.getcwd() end,
                         },
-                        ts_ls = {
-                            root_dir = function() return vim.fn.getcwd() end,
-                        },
                     }
 
 
