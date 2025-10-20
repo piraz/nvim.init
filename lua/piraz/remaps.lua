@@ -58,6 +58,20 @@ local function insert_error()
     end
 end
 
+local function tsesh()
+    local handle = io.popen("tsesh")
+    if handle == nil then
+        return
+    end
+    local output = handle:read("*a")
+    handle:close()
+    -- vim.cmd("redraw!")
+    -- vim.cmd("mode")
+    if output then
+        vim.notify(output, vim.log.levels.INFO, {hide_from_history=true})
+    end
+end
+
 vim.g.mapleader = " "
 -- nnoremap("<leader>bls", "<cmd>ls<CR><cmd>b ")
 vim.keymap.set("n", "<leader>bd", ":bd<CR>", { desc = "Delete current buffer" })
@@ -77,6 +91,9 @@ vim.keymap.set("n", "<leader>dfd", [[f vc<CR><esc>]], { desc = "Delete current l
 vim.keymap.set("n", "<leader>ie", insert_error, { desc = "Insert error handling code" })
 vim.keymap.set("n", "<leader>fl", ":% !fold -s<CR>", { desc = "Fold file" })
 vim.keymap.set("n", "<leader>fj", ":% !jq<CR>", { desc = "Format JSON file" })
+
+-- tmux sessions
+vim.keymap.set("n", "<leader>ss", function() tsesh() end, { desc = "Execute the tmux sesh script inside neovim." })
 
 -- Overwrite past command using blakchole register, to avoid yanking
 vim.keymap.set("x","p", [["_dP]], { noremap=true, silent=true,  desc = "Delete line without yanking" })
