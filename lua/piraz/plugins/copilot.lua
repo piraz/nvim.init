@@ -28,10 +28,10 @@ if vim.fn.has("mac") == 0 then
                     suggestion = { enabled = false },
                 })
                 vim.cmd([[Copilot disable]])
-                vim.defer_fn( function ()
-                    print()
-                    vim.cmd([[Copilot enable]])
-                end, 100)
+                -- vim.defer_fn( function ()
+                --     print()
+                --     vim.cmd([[Copilot enable]])
+                -- end, 100)
             end,
             dependencies = {
                 "AndreM222/copilot-lualine",
