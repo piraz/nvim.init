@@ -52,6 +52,7 @@ return {
             vim.keymap.set("n", "<leader>dc", function() dapui.close() end, {})
             vim.keymap.set("n", "<leader>de", function() dapui.eval() end, {})
             vim.keymap.set("n", "<leader>do", function() dapui.open() end, {})
+            vim.keymap.set("n", "<leader>ds", function() require("dapui").float_element("scopes") end, {})
         end
     },
     {
@@ -85,10 +86,10 @@ return {
             }
         end
     },
-    {
-        "thehamsta/nvim-dap-virtual-text",
-        config = function ()
-            require("nvim-dap-virtual-text").setup()
-        end
-    },
+    -- {
+    --     "thehamsta/nvim-dap-virtual-text",
+    --     config = function ()
+    --         require("nvim-dap-virtual-text").setup()
+    --     end
+    -- },
 }
