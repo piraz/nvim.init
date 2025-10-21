@@ -26,7 +26,7 @@ return {
             vim.keymap.set("n", "<F8>", function() dap.step_over() end, {})
             vim.keymap.set("n", "<F9>", function() dap.step_out() end, {})
 
-            vim.keymap.set("n", "<leader>b", function() dap.toggle_breakpoint() end, {})
+            vim.keymap.set("n", "<leader>bb", function() dap.toggle_breakpoint() end, {})
             vim.keymap.set("n", "<leader>B", function() dap.set_breakpoint(vim.fn.input("Breakpoint condition: ")) end, {})
             vim.keymap.set("n", "<leader>lp", function() dap.set_breakpoint(nil, nil, vim.fn.input("Log point message:")) end, {})
             vim.keymap.set("n", "<leader>lp", function() dap.repl.open() end, {})
