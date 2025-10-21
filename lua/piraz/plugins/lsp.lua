@@ -131,13 +131,15 @@ return {
                                     runtime = { version = "Lua 5.1" },
                                     -- diagnostics = {
                                     --     -- Get the language server to recognize the `vim` global
-                                    --     -- globals = { "bit", "vim", "it", "use", "describe",
-                                    --     --     "after_each", "before_each" },
+                                        globals = { "bit", "vim", "it", "use", "describe",
+                                            "after_each", "before_each" },
                                     -- },
                                     workspace = {
                                         library = {
                                             "${3rd}/busted/library",
                                             "${3rd}/luassert/library",
+                                            vim.env.VIMRUNTIME,
+                                            unpack(vim.api.nvim_get_runtime_file("", true)),
                                         },
                                     },
                                 },
