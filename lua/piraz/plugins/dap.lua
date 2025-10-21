@@ -5,18 +5,18 @@ return {
         "mfussenegger/nvim-dap",
         dependencies = {
             { "nvim-telescope/telescope-dap.nvim" },
-            { "folke/neodev.nvim" },
+            { "folke/lazydev.nvim" },
         },
         config = function ()
             local dap = require("dap")
             -- neodev is going AOL
             -- SEE: https://github.com/nvim-neotest/neotest/issues/417#issue-2334008121
-            local neodev = require("neodev")
+            local lazydev = require("lazydev")
 
             -- See: https://github.com/folke/neodev.nvim
             -- Als: https://github.com/rcarriga/nvim-dap-ui
-            neodev.setup({
-                library = { plugins = { "nvim-dap-ui", types = true } }
+            lazydev.setup({
+                library = { plugins = { "nvim-dap-ui" } }
             })
 
             -- From https://youtu.be/0moS8UHupGc?t=625
