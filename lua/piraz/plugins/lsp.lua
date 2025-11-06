@@ -186,9 +186,6 @@ return {
                         ruff = {
                             root_dir = function() return vim.fn.getcwd() end,
                         },
-                        pylsp = {
-                            root_dir = function() return vim.fn.getcwd() end,
-                        },
                     }
 
 
