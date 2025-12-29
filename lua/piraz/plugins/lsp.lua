@@ -139,7 +139,8 @@ return {
                                             "${3rd}/busted/library",
                                             "${3rd}/luassert/library",
                                             vim.env.VIMRUNTIME,
-                                            unpack(vim.api.nvim_get_runtime_file("", true)),
+                                            -- this unput is making things too slow...
+                                            -- unpack(vim.api.nvim_get_runtime_file("", true)),
                                         },
                                     },
                                 },
@@ -280,6 +281,17 @@ return {
         end,
         dependencies = {
             "rafamadriz/friendly-snippets"
+        },
+    },
+    -- Lazydev
+    {
+        "folke/lazydev.nvim",
+        opts = {
+            library = {
+                -- See: https://github.com/rcarriga/nvim-dap-ui
+                plugins = { "nvim-dap-ui" },
+                { path = "${3rd}/luv/library", words = { "vim%.uv" } },
+            },
         },
     },
 }
