@@ -24,8 +24,14 @@ if vim.fn.has("mac") == 0 then
                     logger = {
                         print_log_level = vim.log.levels.OFF,
                     },
-                    panel = { enabled = false },
-                    suggestion = { enabled = false },
+                    auto_trigger = true,
+                    -- panel = { enabled = false },
+                    suggestion = {
+                        eanbled = true,
+                        keymap = {
+                             accept = "<M-a>"
+                        },
+                    },
                 })
                 vim.cmd([[Copilot disable]])
                 -- vim.defer_fn( function ()
@@ -37,12 +43,12 @@ if vim.fn.has("mac") == 0 then
                 "AndreM222/copilot-lualine",
             },
         },
-        {
-            "zbirenbaum/copilot-cmp",
-            config = function ()
-                require("copilot_cmp").setup()
-            end
-        },
+        -- {
+        --     "zbirenbaum/copilot-cmp",
+        --     config = function ()
+        --         require("copilot_cmp").setup()
+        --     end
+        -- },
     }
 end
 return {}

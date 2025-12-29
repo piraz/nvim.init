@@ -19,7 +19,7 @@ local function is_lua_test()
 end
 
 local function run_file()
-    local current_file_type = vim.api.nvim_buf_get_option(0, "filetype")
+    local current_file_type = vim.bo.filetype
     if current_file_type == "go" then
         if is_go_test(0) then
             vim.cmd("GoTestFile")
@@ -39,7 +39,7 @@ local function run_file()
 end
 
 local function insert_error()
-    local current_file_type = vim.api.nvim_buf_get_option(0, "filetype")
+    local current_file_type = vim.bo.filetype
     if current_file_type == "go" then
         vim.api.nvim_feedkeys(
             vim.api.nvim_eval(
