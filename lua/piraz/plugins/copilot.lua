@@ -33,9 +33,8 @@ if vim.fn.has("mac") == 0 then
                         },
                     },
                 })
-                vim.cmd([[Copilot disable]])
+                -- vim.cmd([[Copilot disable]])
                 -- vim.defer_fn( function ()
-                --     print()
                 --     vim.cmd([[Copilot enable]])
                 -- end, 100)
             end,
@@ -43,12 +42,12 @@ if vim.fn.has("mac") == 0 then
                 "AndreM222/copilot-lualine",
             },
         },
-        -- {
-        --     "zbirenbaum/copilot-cmp",
-        --     config = function ()
-        --         require("copilot_cmp").setup()
-        --     end
-        -- },
+        {
+            "zbirenbaum/copilot-cmp",
+            config = function ()
+                require("copilot_cmp").setup()
+            end
+        },
     }
 end
 return {}
