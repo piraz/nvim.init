@@ -3,7 +3,7 @@ local loaded, Log = pcall(require, "plenary.log")
 
 local M =  {}
 
-M.OS_NAME = vim.loop.os_uname().sysname
+M.OS_NAME = vim.uv.os_uname().sysname
 M.USER_HOME = vim.fn.environ()['HOME']
 
 function M.is_linux()
@@ -22,11 +22,10 @@ function M.path_exists(path)
     return vim.uv.fs_stat(path) ~= nil
 end
 
-M.sep = "/"
+M.sep = package.config:sub(1,1)
 
 if M.is_windows() then
     M.USER_HOME = os.getenv("UserProfile")
-	M.sep = "\\"
 end
 
 M.log = nil
