@@ -19,18 +19,7 @@ function M.is_windows()
 end
 
 function M.path_exists(path)
-    -- see: https://stackoverflow.com/a/40195356
-    local ok, err, code = os.rename(path, path)
-    if not ok then
-        if code == 13 then
-            -- Permission denied, but it exists
-            return true
-        end
-    end
-    if err ~= nil then
-        return false
-    end
-    return ok
+    return vim.uv.fs_stat(path) ~= nil
 end
 
 M.sep = "/"
