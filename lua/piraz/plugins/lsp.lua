@@ -4,6 +4,7 @@ return {
     --     "nvim-java/nvim-java",
     --     config = function()
     --         require("java").setup()
+    --         vim.lsp.enable("jdtls")
     --     end,
     -- },
     {
@@ -27,6 +28,7 @@ return {
                     "clangd",
                     "gopls",
                     "intelephense",
+                    "jdtls",
                     "jsonls",
                     "lemminx",
                     "prosemd_lsp", -- proselint should be installed manually
@@ -165,6 +167,16 @@ return {
                                     --     server = "verbose",
                                     -- },
                                 },
+                            },
+                        },
+                        jdtls = {
+                            root_dir = vim.fn.getcwd(),
+                            settings = {
+                                java = {
+                                    project = {
+                                        sourcePaths = { "src" }
+                                    }
+                                }
                             },
                         },
                         yamlls = {
