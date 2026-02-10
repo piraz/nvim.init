@@ -6,12 +6,14 @@ return {
         build = ":TSUpdate",
         config = function ()
             require("nvim-treesitter.configs").setup {
+                modules = {},
                 -- A list of parser names, or "all" (the four listed parsers should always
                 -- be installed)
                 ensure_installed = {
                     "c",
                     "go",
                     -- "help",
+                    "java",
                     "javascript",
                     "jsdoc",
                     "lua",
@@ -70,6 +72,7 @@ return {
                         -- Instead of true it can also be a list of languages
                         additional_vim_regex_highlighting = false,
                 },
+                parser_install_dir = nil,
             }
         end
     },
