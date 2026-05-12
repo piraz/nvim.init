@@ -11,17 +11,17 @@ return {
             local Hooks = require("git-worktree.hooks")
             local update_on_switch = Hooks.builtins.update_current_buffer_on_switch
 
-            local function last_worktree_file()
-                local git_root = vim.fn.systemlist("git rev-parse --git-common-dir")[1]
-                local current = vim.fn.fnamemodify(git_root, ":h:t")
-                local parent = vim.fn.fnamemodify(git_root, ":h:h:t")
+            local git_root = vim.fn.systemlist("git rev-parse --git-common-dir")[1]
+            local current = vim.fn.fnamemodify(git_root, ":h:t")
+            local parent = vim.fn.fnamemodify(git_root, ":h:h:t")
+            local worktree_file = (function()
                 local dir = vim.fn.stdpath("data") .. "/worktrees/" .. parent .. "_" .. current
                 vim.fn.mkdir(dir, "p")
                 return dir .. "/last_worktree"
-            end
+            end)()
 
             local function save_last_worktree(path)
-                local f = io.open(last_worktree_file(), "w")
+                local f = io.open(worktree_file, "w")
                 if f then
                     f:write(path)
                     f:close()
@@ -29,14 +29,14 @@ return {
             end
 
             local function restore_last_worktree()
-                local f = io.open(last_worktree_file(), "r")
+                local f = io.open(worktree_file, "r")
                 if not f then return end
                 local path = vim.trim(f:read("*a"))
                 f:close()
                 if path and path ~= "" and vim.fn.isdirectory(path) == 1 then
                     vim.api.nvim_set_current_dir(path)
-                    chase.setup()
                     vim.schedule(function()
+                        chase.setup()
                         vim.cmd("Ex " .. vim.fn.fnameescape(path))
                     end)
                 end
