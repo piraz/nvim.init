@@ -119,6 +119,6 @@ vim.keymap.set("v","<leader><leader>d", [["add]], { desc = "Delete line without 
 -- see: https://stacjoverflow.com/a/63542511/2887989
 -- By the way, to select the word under the cursor: * or g*
 vim.keymap.set("n","<leader>sw", "g*", { desc = "Select word under the cursor" })
-vim.keymap.set("n","<leader>sc", function() vim.cmd([[let @/ = ""]]) end, { desc = "Selection clear" })
+vim.keymap.set("n","<leader>cs", "<cmd>nok<CR>", { desc = "Clear the selection highlight" })
 
 -- From: https://superuser.com/a/310424
