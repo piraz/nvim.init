@@ -60,7 +60,7 @@ return {
                 desc = "List worktrees"
             },
             {
-                "<leader>gc",
+                "<leader>wc",
                 function() require('telescope').extensions.git_worktree.create_git_worktree() end,
                 desc = "Create worktree"
             },
