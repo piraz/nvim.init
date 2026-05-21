@@ -29,6 +29,8 @@ return {
             end
 
             local function restore_last_worktree()
+                if vim.fn.argc() == 0 then return end
+                if vim.fn.argv(0) ~= "." then return end
                 local f = io.open(worktree_file, "r")
                 if not f then return end
                 local path = vim.trim(f:read("*a"))
