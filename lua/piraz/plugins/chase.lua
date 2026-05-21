@@ -1,13 +1,14 @@
 -- This file can be loaded by calling `lua require("plugins")` from your
 -- init.vim
-local Dev = require("piraz.dev")
-
-local chase_source = table.concat({
-    Dev.USER_HOME, "source", "candango", "chase"
-}, Dev.sep)
+local chase_source = vim.fs.joinpath(
+    vim.uv.os_homedir(),
+    "source",
+    "candango",
+    "chase"
+)
 
 local chase = { "candango/chase.nvim", opts={} }
-if Dev.path_exists(chase_source) then
+if vim.uv.fs_stat(chase_source) then
     chase = { "candango/chase.nvim", dev = true, name = "chase", opts={} }
 end
 

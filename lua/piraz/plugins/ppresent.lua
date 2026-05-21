@@ -1,8 +1,9 @@
-local Dev = require("piraz.dev")
-
-local ppresent_src = table.concat({
-    vim.fn.environ()['HOME'], "source", "piraz", "ppresent"
-}, Dev.sep)
+local ppresent_src = vim.fs.joinpath(
+    vim.uv.os_homedir(),
+    "source",
+    "piraz",
+    "ppresent"
+)
 
 local config = {
     start_hook = function(_)
@@ -14,7 +15,7 @@ local config = {
 }
 
 local ppresent = { "piraz/ppresent.nvim", opts={} }
-if Dev.path_exists(ppresent_src) then
+if vim.uv.fs_stat(ppresent_src) then
     ppresent = { "piraz/ppresent.nvim", dir = ppresent_src }
 end
 
