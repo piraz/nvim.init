@@ -73,6 +73,7 @@ local function tsesh()
 end
 
 vim.g.mapleader = " "
+
 -- nnoremap("<leader>bls", "<cmd>ls<CR><cmd>b ")
 vim.keymap.set("n", "<leader>bd", ":bd<CR>", { desc = "Delete current buffer" })
 vim.keymap.set("n", "<leader>cl" , function() vim.o.cursorcolumn = not vim.o.cursorcolumn end, {desc = "Toggle opt cursorcolumn"})
@@ -85,8 +86,6 @@ vim.keymap.set("n", "<leader>x", run_file, {desc = "Run file"})
 vim.keymap.set("n", "<leader>mzu", "<cmd>MasonUpdate<CR>", { desc = "Mason Update" })
 vim.keymap.set("n", "<leader>lzs", "<cmd>Lazy sync<CR>", { desc = "Lazy sync" })
 vim.keymap.set("n", "<leader>w", ":w<CR>", { desc = "Save file" })
-vim.keymap.set("n", "<leader>dff", [[0vwh"_d]], { desc = "Delete current line without yanking" })
-vim.keymap.set("n", "<leader>dfu", [[0i <esc>vwh"_di<bs><esc>li ]], { desc = "Delete current line without yanking and insert space at the beginning" })
 vim.keymap.set("n", "<leader>dfd", [[f vc<CR><esc>]], { desc = "Delete current line without yanking and insert space at the beginning" })
 vim.keymap.set("n", "<leader>ie", insert_error, { desc = "Insert error handling code" })
 vim.keymap.set("n", "<leader>fl", ":% !fold -s<CR>", { desc = "Fold file" })
@@ -96,25 +95,21 @@ vim.keymap.set("n", "<leader>fj", ":% !jq<CR>", { desc = "Format JSON file" })
 vim.keymap.set("n", "<leader>ss", function() tsesh() end, { desc = "Execute the tmux sesh script inside neovim." })
 
 -- Overwrite past command using blakchole register, to avoid yanking
-vim.keymap.set("x","p", [["_dP]], { noremap=true, silent=true,  desc = "Delete line without yanking" })
+vim.keymap.set("x", "p", "P", { noremap = true, silent = true, desc = "Paste without yanking" })
 
 -- see: https://stackoverflow.com/a/73354675/2887989
-vim.keymap.set("n","<leader>y", [["+y]], { desc = "Yank to system clipboard" })
-vim.keymap.set("v","<leader>y", [["+y<Esc>]], { desc = "Yank to system clipboard" })
+vim.keymap.set({"n", "v"},"<leader>y", [["+y]], { desc = "Yank to system clipboard" })
 vim.keymap.set("n","<leader>Y", [["+yy]], { desc = "Yank line to system clipboard" })
 vim.keymap.set("v","<leader>Y", [["+yy<Esc>]], { desc = "Yank line to system clipboard" })
-vim.keymap.set("n","<leader>p", [["+p]], { desc = "Paste from system clipboard" })
-vim.keymap.set("v","<leader>p", [["+p]], { desc = "Paste from system clipboard" })
+vim.keymap.set({"n", "v"},"<leader>p", [["+p]], { desc = "Paste from system clipboard" })
 
 -- From: https://stacjoverflow.com/a/3638557
-vim.keymap.set("n","<leader><leader>d", [["_dd]], { desc = "Delete line without yanking" })
-vim.keymap.set("v","<leader><leader>d", [["_dd]], { desc = "Delete line without yanking" })
+vim.keymap.set({"n", "v"},"<leader>d", [["_d]], { desc = "Delete line without yanking" })
 vim.keymap.set("n","<leader><leader>y", [["ay]], { desc = "Yank to register 'a'" })
 vim.keymap.set("v","<leader><leader>y", [["ay]], { desc = "Yank to register 'a'" })
 vim.keymap.set("n","<leader><leader>p", [["ap]], { desc = "Paste from register 'a'" })
 vim.keymap.set("v","<leader><leader>p", [["ap]], { desc = "Paste from register 'a'" })
-vim.keymap.set("n","<leader><leader>d", [["add]], { desc = "Delete line without yanking to register 'a'" })
-vim.keymap.set("v","<leader><leader>d", [["add]], { desc = "Delete line without yanking to register 'a'" })
+vim.keymap.set("n","<leader><leader>d", [["add]], { desc = "Delete line yanking to register 'a'" })
 
 -- see: https://stacjoverflow.com/a/63542511/2887989
 -- By the way, to select the word under the cursor: * or g*
