@@ -1,48 +1,42 @@
-local Dev = require("piraz.dev")
+vim.o.guicursor = ""
+vim.o.mouse = ""
 
-vim.opt.guicursor = ""
+vim.o.number = true
+vim.o.relativenumber = true
 
-vim.opt.mouse = ""
+vim.o.tabstop = 4
+vim.o.softtabstop = 4
+vim.o.shiftwidth = 4
+vim.o.expandtab = true
 
-vim.opt.number = true
-vim.opt.relativenumber = true
+vim.o.smartindent = true
+vim.o.wrap = false
 
-vim.opt.tabstop = 4
-vim.opt.softtabstop = 4
-vim.opt.shiftwidth = 4
-vim.opt.expandtab = true
-
-vim.opt.smartindent = true
-
-vim.opt.wrap = false
-
-vim.opt.listchars = "tab:> ,trail:-,nbsp:+"
-
-vim.opt.swapfile = false
-vim.opt.backup = false
-vim.opt.undodir = vim.fn.stdpath("data") .. table.concat({
-    "", "undodir"
-}, Dev.sep)
-vim.opt.undofile = true
+vim.o.swapfile = false
+vim.o.backup = false
+vim.o.undofile = true
+local undo_dir = vim.fs.joinpath(vim.fn.stdpath("data"), "undodir")
+vim.fn.mkdir(undo_dir, "p")
+vim.o.undodir = undo_dir
 
 -- vim.opt.hlsearch = false
-vim.opt.incsearch = true
+vim.o.incsearch = true
 
-vim.opt.termguicolors = true
+vim.o.termguicolors = true
+vim.o.winborder = "single"
 
-vim.opt.scrolloff = 8
+vim.o.scrolloff = 8
 
 -- Reserve a space in the gutter
 -- This will avoid an annoying layout shift in the screen
-vim.opt.signcolumn = "yes"
-vim.opt.isfname:append("@-@")
+vim.o.signcolumn = "yes"
 
-vim.opt.updatetime = 50
-vim.opt.colorcolumn = "80"
-vim.opt.cursorcolumn = true
+vim.o.updatetime = 50
+vim.o.colorcolumn = "80"
+vim.o.cursorcolumn = true
 -- vim.opt.cursorline= false
 
-vim.opt.splitright = true
+vim.o.splitright = true
 
 vim.g.mapleader = " "
 
