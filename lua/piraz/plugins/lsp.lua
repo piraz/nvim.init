@@ -38,6 +38,7 @@ return {
                     "ruff",
                     "rust_analyzer",
                     "yamlls",
+                    "ts_query_ls",
                     "ts_ls",
                 }
             })
@@ -198,6 +199,11 @@ return {
                         -- see :h lspconfig-root-detection
                         ruff = {
                             root_dir = function() return vim.fn.getcwd() end,
+                        },
+                        ts_query_ls = {
+                            settings = {
+                                parser_install_directories = vim.api.nvim_get_runtime_file("parser", true),
+                            },
                         },
                     }
 
