@@ -19,12 +19,14 @@ end
 
 vim.opt.rtp:prepend(lazypath)
 
-require("lazy").setup({
-    spec = {
+require("lazy").setup(
+    {
         { import = "piraz/plugins" },
     },
-    change_detection = { notify = false },
-    dev = {
-        path = "~/source/candango",
-    },
-})
+    {
+        change_detection = { notify = false },
+        dev = {
+            path = "~/source/candango",
+        },
+    }
+)
