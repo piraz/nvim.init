@@ -108,6 +108,9 @@ return {
                         -- but on the diagnostics we need use also and the workspace.library is not
                         -- needed
                         ltex = {
+                            cmd_env = {
+                                JAVA_OPTS = "-Djdk.xml.totalEntitySizeLimit=1000000",
+                            },
                             settings = {
                                 ltex = {
                                     enabled = {
