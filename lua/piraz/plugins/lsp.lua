@@ -23,6 +23,7 @@ return {
             require("mason-lspconfig").setup({
                 automatic_enable = false,
                 ensure_installed = {
+                    "basedpyright",
                     "bashls", -- shell check should be installed manually
                     "buf_ls",
                     "clangd",
@@ -32,7 +33,6 @@ return {
                     "jsonls",
                     "lemminx",
                     "prosemd_lsp", -- proselint should be installed manually
-                    "pylsp",
                     "lua_ls",
                     "ltex",
                     "ruff",
