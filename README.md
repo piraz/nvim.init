@@ -2,6 +2,8 @@
 
 This is my personal neovim configuration.
 
+> Requires Neovim 0.12 or newer.
+
 It is based on [ThePrimeagen's](https://github.com/ThePrimeagen/init.lua)
 configuration, and I'm really thankful about his crazy explanation on
 [this video](https://www.youtube.com/watch?v=w7i4amO_zaE&) but right now this
